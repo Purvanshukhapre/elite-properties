@@ -95,7 +95,7 @@ const BlogInsights = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-gradient-to-b from-gray-50 to-soft-gray">
+    <div className="py-16 px-4 bg-white">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
           {/* Testimonials Section */}
@@ -111,7 +111,7 @@ const BlogInsights = () => {
 
             <div className="relative max-w-4xl mx-auto">
               <motion.div
-                className="bg-soft-gray rounded-2xl p-8 md:p-12 text-center"
+                className="bg-white rounded-2xl p-8 md:p-12 text-center shadow-sm"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -205,12 +205,12 @@ const BlogInsights = () => {
                 <motion.article
                   key={post.id}
                   variants={itemVariants}
-                  className="bg-white rounded-xl border border-border-color overflow-hidden hover:shadow-md transition-all duration-300 cursor-pointer group"
+                  className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group property-card-hover"
                   whileHover={{ y: -5 }}
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="px-3 py-1 bg-primary-blue/10 text-primary-blue text-sm rounded-full font-medium">
+                      <span className="px-3 py-1 bg-[#2563EB]/10 text-[#2563EB] text-sm rounded-full font-medium">
                         {post.category}
                       </span>
                       <div className="flex items-center text-sm text-text-secondary">
@@ -219,8 +219,13 @@ const BlogInsights = () => {
                       </div>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-primary-blue transition-colors">
+                    <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-[#2563EB] transition-colors relative inline-block">
                       {post.title}
+                      <motion.div 
+                        className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2563EB]"
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
                     </h3>
                     
                     <p className="text-text-secondary mb-4 leading-relaxed">

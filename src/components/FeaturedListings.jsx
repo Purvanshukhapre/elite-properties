@@ -106,7 +106,7 @@ const FeaturedListings = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-gradient-to-b from-soft-gray to-white">
+    <div className="py-16 px-4 bg-white">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -128,34 +128,33 @@ const FeaturedListings = () => {
               <motion.div
                 key={listing.id}
                 variants={itemVariants}
-                className="group bg-white rounded-2xl border border-border-color overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-                whileHover={{ y: -10, scale: 1.02, borderColor: COLORS.accent.primaryBlue }}
+                className="group bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl property-card-hover cursor-pointer"
               >
                 <div className="relative group-img">
                   <img
                     src={listing.image}
                     alt={listing.address}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-104"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFavorite(listing.id);
                     }}
-                    className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-primary-blue hover:text-white transition-all duration-300 group-heart"
+                    className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-[#2563EB] hover:text-white transition-all duration-300 group-heart"
                   >
                     <FaHeart 
-                      className={favorites[listing.id] ? 'text-primary-blue fill-current' : 'text-gray-400 group-hover:text-red-400'} 
+                      className={favorites[listing.id] ? 'text-[#2563EB] fill-current' : 'text-gray-400 group-hover:text-red-400'} 
                     />
                   </button>
                   {listing.featured && (
-                    <div className="absolute top-3 left-3 bg-gradient-to-r from-primary-blue to-secondary-blue text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <div className="absolute top-3 left-3 bg-[#2563EB] text-white px-3 py-1 rounded-full text-sm font-medium">
                       Featured
                     </div>
                   )}
                   <div className="absolute bottom-3 left-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="bg-primary-blue/80 px-3 py-1 rounded-full text-sm font-medium">{listing.type}</span>
+                    <span className="bg-[#2563EB]/90 px-3 py-1 rounded-full text-sm font-medium">{listing.type}</span>
                   </div>
                 </div>
                 

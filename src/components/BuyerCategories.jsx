@@ -63,7 +63,7 @@ const BuyerCategories = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-gradient-to-b from-soft-gray to-white">
+    <div className="py-16 px-4 section-rhythm">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -85,19 +85,19 @@ const BuyerCategories = () => {
               <motion.div
                 key={category.id}
                 variants={itemVariants}
-                className="group relative overflow-hidden rounded-2xl bg-white border border-border-color cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
-                whileHover={{ y: -10, scale: 1.02, borderColor: COLORS.accent.primaryBlue }}
-                transition={{ duration: 0.3 }}
-              >
+                className={`group relative overflow-hidden rounded-2xl bg-white border border-gray-200 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 ${
+                  category.id === 'luxury' || category.id === 'first-time' ? 'lg:col-span-1' : 'lg:col-span-1'
+                }`}
+                whileHover={{ y: -6, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-primary-blue/5 to-secondary-blue/5 opacity-0"
+                  className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/5 to-[#1D4ED8]/5 opacity-0"
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />
                 <div className="relative z-10 p-8 h-full">
                   <div className="flex flex-col md:flex-row items-start">
                     {/* Icon Container */}
-                    <div className="p-4 rounded-xl bg-gradient-to-r from-primary-blue to-secondary-blue text-white mb-6 md:mb-0 md:mr-6 shadow-md">
+                    <div className="p-4 rounded-xl bg-[#2563EB] text-white mb-6 md:mb-0 md:mr-6 shadow-md">
                       {category.icon}
                     </div>
                     
@@ -127,10 +127,14 @@ const BuyerCategories = () => {
                       {/* Stats Mobile */}
                       <div className="md:hidden grid grid-cols-2 gap-4 mb-6">
                         {Object.entries(category.stats).map(([key, value]) => (
-                          <div key={key} className="text-center p-3 bg-soft-gray rounded-lg">
-                            <div className="text-lg font-bold text-primary-blue">{value}</div>
+                          <motion.div 
+                            key={key}
+                            className="text-center p-3 bg-gray-50 rounded-lg"
+                            whileHover={{ y: -4 }}
+                          >
+                            <div className="text-lg font-bold text-[#2563EB]">{value}</div>
                             <div className="text-xs text-text-secondary capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</div>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                       

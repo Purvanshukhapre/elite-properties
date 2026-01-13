@@ -6,6 +6,7 @@ import { COLORS } from '../constants/brand';
 
 const PropertyMap = () => {
   const [hoveredPin, setHoveredPin] = useState(null);
+  const [hoveredListing, setHoveredListing] = useState(null);
 
   // Sample property data with coordinates for the map
   const properties = [
@@ -67,7 +68,7 @@ const PropertyMap = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
+    <div className="py-16 px-4 bg-white">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -87,7 +88,7 @@ const PropertyMap = () => {
               initial="hidden"
               animate="visible"
             >
-              <div className="relative h-96 bg-gradient-to-br from-blue-50 to-indigo-100">
+              <div className="relative h-96 bg-gradient-to-br from-gray-50 to-gray-100">
                 {/* Simulated map with markers */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
@@ -114,9 +115,9 @@ const PropertyMap = () => {
                   >
                     <FaMapMarkerAlt 
                       className={`text-3xl ${
-                        hoveredPin === property.id 
-                          ? 'text-primary-blue' 
-                          : 'text-secondary-blue'
+                        hoveredPin === property.id || hoveredListing === property.id
+                          ? 'text-[#2563EB]' 
+                          : 'text-gray-600'
                       }`} 
                     />
                   </motion.div>
@@ -136,12 +137,18 @@ const PropertyMap = () => {
                   key={property.id}
                   variants={itemVariants}
                   className={`bg-white rounded-xl border p-6 cursor-pointer transition-all duration-300 ${
-                    hoveredPin === property.id
-                      ? 'border-primary-blue shadow-md'
-                      : 'border-border-color'
+                    hoveredPin === property.id || hoveredListing === property.id
+                      ? 'border-[#2563EB] shadow-lg'
+                      : 'border-gray-200'
                   }`}
-                  onMouseEnter={() => setHoveredPin(property.id)}
-                  onMouseLeave={() => setHoveredPin(null)}
+                  onMouseEnter={() => {
+                    setHoveredPin(property.id);
+                    setHoveredListing(property.id);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredPin(null);
+                    setHoveredListing(null);
+                  }}
                   whileHover={{ y: -3 }}
                 >
                   <div className="flex justify-between items-start mb-3">

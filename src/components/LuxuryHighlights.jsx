@@ -8,39 +8,21 @@ const LuxuryHighlights = () => {
   const services = [
     {
       icon: <FaHome className="text-3xl" />,
-      title: 'Property Management',
-      description: 'Comprehensive management services for residential and commercial properties',
-      color: 'from-primary-blue to-secondary-blue'
+      title: '10+ Years Experience',
+      description: 'Proven track record of successful transactions',
+      color: 'from-[#2563EB] to-[#1D4ED8]'
     },
     {
       icon: <FaDollarSign className="text-3xl" />,
-      title: 'Financial Services',
-      description: 'Mortgage assistance and financial planning for your real estate investments',
-      color: 'from-soft-highlight to-primary-blue'
+      title: '25,000+ Properties Sold',
+      description: 'Trusted by thousands of satisfied clients',
+      color: 'from-[#2563EB] to-[#1D4ED8]'
     },
     {
       icon: <FaChartLine className="text-3xl" />,
-      title: 'Market Analysis',
-      description: 'In-depth market research and investment opportunity analysis',
-      color: 'from-primary-blue to-soft-highlight'
-    },
-    {
-      icon: <FaShieldAlt className="text-3xl" />,
-      title: 'Legal Support',
-      description: 'Professional legal guidance for all your real estate transactions',
-      color: 'from-secondary-blue to-primary-blue'
-    },
-    {
-      icon: <FaUserTie className="text-3xl" />,
-      title: 'Consulting',
-      description: 'Expert consultation for buyers, sellers, and investors',
-      color: 'from-soft-highlight to-secondary-blue'
-    },
-    {
-      icon: <FaKey className="text-3xl" />,
-      title: 'Property Sales',
-      description: 'Professional sales services with guaranteed results',
-      color: 'from-primary-blue to-soft-highlight'
+      title: 'Local Market Experts',
+      description: 'Deep knowledge of your area\'s real estate trends',
+      color: 'from-[#2563EB] to-[#1D4ED8]'
     }
   ];
 
@@ -67,7 +49,7 @@ const LuxuryHighlights = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-gradient-to-b from-indigo-50 to-white">
+    <div className="py-16 px-4 bg-[#F1F5F9]">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -89,13 +71,13 @@ const LuxuryHighlights = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group bg-white p-8 rounded-xl border border-border-color hover:shadow-md transition-all duration-300 cursor-pointer text-center"
-                whileHover={{ y: -5, borderColor: COLORS.accent.primaryBlue }}
+                className="group bg-white p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer text-center"
+                whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
               >
                 <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${service.color} text-white mb-6 group-hover:scale-110 transition-transform`}>
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-primary-blue transition-colors">
+                <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-[#2563EB] transition-colors">
                   {service.title}
                 </h3>
                 <p className="text-text-secondary">
