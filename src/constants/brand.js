@@ -1,6 +1,6 @@
 // Brand Identity Constants
 export const BRAND = {
-  name: 'Premier Estates',
+  name: 'Elite Properties',
   tagline: 'Residential & Commercial Real Estate',
   slogan: 'Find Property That Matches Your Ambition',
   description: 'Exceptional real estate solutions for clients seeking quality and value'
