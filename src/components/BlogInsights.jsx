@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { FaQuoteLeft, FaStar, FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { RevealOnScroll } from './ScrollAwareComponent';
-import { COLORS } from '../constants/brand';
 
 const BlogInsights = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -72,28 +70,6 @@ const BlogInsights = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
     <div className="py-16 px-4 bg-white">
       <RevealOnScroll>
@@ -101,29 +77,20 @@ const BlogInsights = () => {
           {/* Testimonials Section */}
           <div className="mb-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Client Testimonials
               </h2>
-              <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
                 Hear from our satisfied clients
               </p>
             </div>
 
             <div className="relative max-w-4xl mx-auto">
-              <motion.div
-                className="bg-white rounded-2xl p-8 md:p-12 text-center shadow-sm"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <FaQuoteLeft className="text-primary-blue text-4xl mb-6 mx-auto" />
+              <div className="bg-white rounded-2xl p-8 md:p-12 text-center shadow-sm">
+                <FaQuoteLeft className="text-blue-600 text-4xl mb-6 mx-auto" />
                 
-                <motion.div
-                  key={currentIndex}
-                  variants={itemVariants}
-                  className="mb-8"
-                >
-                  <p className="text-xl text-text-primary mb-6 leading-relaxed">
+                <div key={currentIndex} className="mb-8 transition-all duration-500">
+                  <p className="text-xl text-gray-900 mb-6 leading-relaxed">
                     "{testimonials[currentIndex].content}"
                   </p>
                   
@@ -140,20 +107,20 @@ const BlogInsights = () => {
                       className="w-12 h-12 rounded-full mr-4"
                     />
                     <div className="text-left">
-                      <h4 className="font-bold text-text-primary">{testimonials[currentIndex].name}</h4>
-                      <p className="text-text-secondary">{testimonials[currentIndex].role}</p>
-                      <p className="text-sm text-text-secondary flex items-center">
+                      <h4 className="font-bold text-gray-900">{testimonials[currentIndex].name}</h4>
+                      <p className="text-gray-600">{testimonials[currentIndex].role}</p>
+                      <p className="text-sm text-gray-600 flex items-center">
                         <FaCalendarAlt className="mr-1" />
                         {testimonials[currentIndex].date}
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
                 <div className="flex justify-center space-x-4">
                   <button
                     onClick={prevTestimonial}
-                    className="p-3 rounded-full border border-border-color hover:bg-primary-blue hover:text-white transition-colors"
+                    className="p-3 rounded-full border border-gray-200 hover:bg-blue-600 hover:text-white transition-colors"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -161,7 +128,7 @@ const BlogInsights = () => {
                   </button>
                   <button
                     onClick={nextTestimonial}
-                    className="p-3 rounded-full border border-border-color hover:bg-primary-blue hover:text-white transition-colors"
+                    className="p-3 rounded-full border border-gray-200 hover:bg-blue-600 hover:text-white transition-colors"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -175,71 +142,60 @@ const BlogInsights = () => {
                       key={index}
                       onClick={() => setCurrentIndex(index)}
                       className={`w-3 h-3 rounded-full ${
-                        index === currentIndex ? 'bg-primary-blue' : 'bg-gray-300'
+                        index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
 
           {/* Blog Posts Section */}
           <div>
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Market Insights
               </h2>
-              <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
                 Latest news and analysis from the real estate market
               </p>
             </div>
 
-            <motion.div
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {blogPosts.map((post) => (
-                <motion.article
+                <article
                   key={post.id}
-                  variants={itemVariants}
-                  className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group property-card-hover"
-                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group hover:-translate-y-1"
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="px-3 py-1 bg-[#2563EB]/10 text-[#2563EB] text-sm rounded-full font-medium">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-600 text-sm rounded-full font-medium">
                         {post.category}
                       </span>
-                      <div className="flex items-center text-sm text-text-secondary">
+                      <div className="flex items-center text-sm text-gray-600">
                         <FaCalendarAlt className="mr-1" />
                         {post.date}
                       </div>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-[#2563EB] transition-colors relative inline-block">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors relative">
                       {post.title}
-                      <motion.div 
-                        className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#2563EB]"
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
+                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
                     </h3>
                     
-                    <p className="text-text-secondary mb-4 leading-relaxed">
+                    <p className="text-gray-600 mb-4 leading-relaxed">
                       {post.excerpt}
                     </p>
                     
-                    <div className="flex items-center text-sm text-text-secondary">
+                    <div className="flex items-center text-sm text-gray-600">
                       <FaUser className="mr-2" />
                       {post.readTime}
                     </div>
                   </div>
-                </motion.article>
+                </article>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </RevealOnScroll>

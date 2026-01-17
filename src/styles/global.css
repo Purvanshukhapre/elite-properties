@@ -1,8 +1,16 @@
-/* Global Styles for Micro-interactions and Subtle Motions */
+/* Premium Global Styles for SaaS-Level Design */
+
+/* Base styles for consistent typography */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
 
 /* Smooth transition classes */
 .smooth-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Enhanced focus states for accessibility */
@@ -13,41 +21,41 @@
 }
 
 .focus-outline:focus {
-  outline-color: #006AFF;
+  outline-color: #3B82F6;
 }
 
-/* Glow effects for interactive elements */
+/* Premium glow effects for interactive elements */
 .glow-on-hover {
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.4s ease;
 }
 
 .glow-on-hover:hover {
-  box-shadow: 0 0 20px rgba(0, 106, 255, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(59, 130, 246, 0.2);
 }
 
 /* Subtle lift effect on hover */
 .lift-on-hover {
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lift-on-hover:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 /* Scale effect on hover */
 .scale-on-hover {
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scale-on-hover:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
-/* Fade in on scroll animations */
+/* Premium fade in on scroll animations */
 .fade-in-element {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in-element.visible {
@@ -66,24 +74,24 @@
 }
 
 .pulse-gentle {
-  animation: pulse-gentle 3s ease-in-out infinite;
+  animation: pulse-gentle 4s ease-in-out infinite;
 }
 
-/* Float animation */
+/* Premium float animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
 }
 
 .float-animation {
-  animation: float 4s ease-in-out infinite;
+  animation: float 5s ease-in-out infinite;
 }
 
-/* Gradient animation */
+/* Premium gradient animation */
 @keyframes gradient-x {
   0%, 100% {
     background-size: 200% 200%;
@@ -100,40 +108,41 @@
   animation: gradient-x 15s ease infinite;
 }
 
-/* Custom scrollbar for luxury feel */
+/* Premium scrollbar for luxury feel */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #2563EB, #2563EB);
-  border-radius: 4px;
+  background: linear-gradient(to bottom, #3B82F6, #1D4ED8);
+  border-radius: 10px;
+  border: 2px solid #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #1D4ED8, #1D4ED8);
+  background: linear-gradient(to bottom, #1D4ED8, #1E40AF);
 }
 
 /* Color system updates */
 .soft-gray-bg {
-  background-color: #F1F5F9;
+  background-color: #F8FAFC;
 }
 
 .border-neutral {
-  border-color: #CBD5E1;
+  border-color: #E2E8F0;
 }
 
 .text-neutral {
   color: #64748B;
 }
 
-/* Animation utilities */
+/* Premium animation utilities */
 .hero-image-scale {
-  animation: slow-scale 20s ease-in-out infinite alternate;
+  animation: slow-scale 30s ease-in-out infinite alternate;
 }
 
 @keyframes slow-scale {
@@ -141,35 +150,35 @@
     transform: scale(1);
   }
   100% {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 }
 
-/* Card hover effects */
+/* Premium card hover effects */
 .property-card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .property-card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 /* Section rhythm */
 .section-rhythm {
-  background: linear-gradient(to bottom, #F1F5F9 0%, #FFFFFF 100%);
+  background: linear-gradient(to bottom, #F8FAFC 0%, #FFFFFF 100%);
 }
 
-/* Custom gradients */
+/* Premium gradients */
 .cta-gradient {
-  background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
 }
 
-/* Scroll-based animations */
+/* Premium scroll-based animations */
 .fade-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-up.visible {
@@ -177,27 +186,10 @@
   transform: translateY(0);
 }
 
-/* Animation utilities */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #2563EB, #2563EB);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #1D4ED8, #1D4ED8);
-}
-
-/* Selection color for luxury feel */
+/* Premium selection color */
 ::selection {
-  background-color: rgba(37, 99, 235, 0.2);
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #1E293B;
 }
 
 /* Reduce motion for users who prefer it */
@@ -211,13 +203,13 @@
   }
 }
 
-/* Custom cursor effects for luxury feel */
+/* Premium cursor effects */
 .luxury-cursor {
   cursor: pointer;
 }
 
 .luxury-cursor:hover {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%232563EB' opacity='0.8'/%3E%3C/svg%3E") 12 12, pointer;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%233B82F6' opacity='0.8'/%3E%3C/svg%3E") 12 12, pointer;
 }
 
 /* Enhanced button ripple effect */
@@ -234,14 +226,14 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.3);
+  background: rgba(59, 130, 246, 0.3);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
 }
 
 .ripple-button:active::before {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 /* New ripple effect for dynamic buttons */
@@ -255,13 +247,13 @@ button {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.6);
   transform: scale(0);
-  animation: ripple-animation 0.6s linear;
+  animation: ripple-animation 0.8s ease-out;
   pointer-events: none;
 }
 
 @keyframes ripple-animation {
   to {
-    transform: scale(4);
+    transform: scale(5);
     opacity: 0;
   }
 }

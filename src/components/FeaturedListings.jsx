@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { FaHeart, FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
 import { RevealOnScroll } from './ScrollAwareComponent';
-import { COLORS } from '../constants/brand';
 
 const FeaturedListings = () => {
   const [favorites, setFavorites] = useState({});
@@ -10,7 +8,7 @@ const FeaturedListings = () => {
   const listings = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400&h=300&fit=crop',
       price: '$899,000',
       address: '123 Luxury Ave, Beverly Hills, CA',
       beds: 4,
@@ -21,7 +19,7 @@ const FeaturedListings = () => {
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop',
       price: '$650,000',
       address: '456 Modern St, Santa Monica, CA',
       beds: 3,
@@ -32,7 +30,7 @@ const FeaturedListings = () => {
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1575517111839-3a3843ee7f5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&h=300&fit=crop',
       price: '$1,250,000',
       address: '789 Premium Rd, Malibu, CA',
       beds: 5,
@@ -43,7 +41,7 @@ const FeaturedListings = () => {
     },
     {
       id: 4,
-      image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400&h=300&fit=crop',
       price: '$425,000',
       address: '321 Cozy Ln, Venice, CA',
       beds: 2,
@@ -54,7 +52,7 @@ const FeaturedListings = () => {
     },
     {
       id: 5,
-      image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400&h=300&fit=crop',
       price: '$750,000',
       address: '654 Elegant Pl, West Hollywood, CA',
       beds: 3,
@@ -65,7 +63,7 @@ const FeaturedListings = () => {
     },
     {
       id: 6,
-      image: 'https://images.unsplash.com/photo-1575517111839-3a3843ee7f5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop',
       price: '$985,000',
       address: '987 Luxury Blvd, Pasadena, CA',
       beds: 4,
@@ -83,123 +81,104 @@ const FeaturedListings = () => {
     }));
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
-    <div className="py-16 px-4 bg-white">
+    <div className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
       <RevealOnScroll>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Featured Listings
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-full px-6 py-2 mb-6 border border-blue-200/50">
+              <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+              <span className="text-blue-600 font-semibold text-sm">PREMIUM COLLECTION</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Featured Premium Listings
             </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto text-lg">
-              Handpicked properties that match your search criteria
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
+              Carefully curated luxury properties selected for discerning buyers
             </p>
           </div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {listings.map((listing) => (
-              <motion.div
+              <div
                 key={listing.id}
-                variants={itemVariants}
-                className="group bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl property-card-hover cursor-pointer"
+                className="group bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-blue-500/15 transform transition-all duration-500 hover:-translate-y-3 cursor-pointer relative overflow-hidden hover:scale-[1.02]"
               >
-                <div className="relative group-img">
-                  <img
-                    src={listing.image}
-                    alt={listing.address}
-                    className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-104"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(listing.id);
-                    }}
-                    className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-[#2563EB] hover:text-white transition-all duration-300 group-heart"
-                  >
-                    <FaHeart 
-                      className={favorites[listing.id] ? 'text-[#2563EB] fill-current' : 'text-gray-400 group-hover:text-red-400'} 
-                    />
-                  </button>
-                  {listing.featured && (
-                    <div className="absolute top-3 left-3 bg-[#2563EB] text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </div>
-                  )}
-                  <div className="absolute bottom-3 left-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="bg-[#2563EB]/90 px-3 py-1 rounded-full text-sm font-medium">{listing.type}</span>
-                  </div>
-                </div>
+                {/* Premium Effect Layer */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 via-transparent to-blue-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-text-primary group-hover:text-primary-blue transition-colors cursor-pointer">
-                      {listing.price}
-                    </h3>
-                    <span className="text-sm text-text-secondary bg-gray-100 px-2 py-1 rounded">
-                      {listing.type}
-                    </span>
+                <div className="relative z-10">
+                  <div className="relative group-img">
+                    <img
+                      src={listing.image}
+                      alt={listing.address}
+                      className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(listing.id);
+                      }}
+                      className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-full shadow-lg hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-700 hover:text-white transition-all duration-300"
+                    >
+                      <FaHeart 
+                        className={`w-5 h-5 ${favorites[listing.id] ? 'text-blue-600 fill-current' : 'text-gray-500 group-hover:text-white'}`} 
+                      />
+                    </button>
+                    {listing.featured && (
+                      <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                        PREMIUM
+                      </div>
+                    )}
+                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <span className="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium shadow-lg">{listing.type}</span>
+                    </div>
                   </div>
                   
-                  <p className="text-text-secondary mb-3 flex items-center">
-                    <FaMapMarkerAlt className="mr-1 text-sm" />
-                    {listing.address}
-                  </p>
-                  
-                  <div className="flex items-center text-text-secondary text-sm space-x-4 mb-4">
-                    <span className="flex items-center">
-                      <FaBed className="mr-1" />
-                      {listing.beds} beds
-                    </span>
-                    <span className="flex items-center">
-                      <FaBath className="mr-1" />
-                      {listing.baths} baths
-                    </span>
-                    <span className="flex items-center">
-                      <FaRulerCombined className="mr-1" />
-                      {listing.sqft} sqft
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between pt-4 border-t border-border-color">
-                    <button className="text-primary-blue font-medium hover:text-secondary-blue transition-colors">
-                      View Details
-                    </button>
-                    <button className="bg-gradient-to-r from-primary-blue to-secondary-blue text-white px-4 py-2 rounded-lg hover:shadow-md transition-all">
-                      Schedule Tour
-                    </button>
+                  <div className="p-8">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors cursor-pointer">
+                        {listing.price}
+                      </h3>
+                      <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full font-medium">
+                        {listing.type}
+                      </span>
+                    </div>
+                    
+                    <p className="text-gray-700 mb-5 flex items-center">
+                      <FaMapMarkerAlt className="mr-2 text-blue-600 w-4 h-4" />
+                      {listing.address}
+                    </p>
+                    
+                    <div className="flex items-center text-gray-600 text-sm space-x-6 mb-6">
+                      <span className="flex items-center">
+                        <FaBed className="mr-2 text-blue-600 w-4 h-4" />
+                        {listing.beds} beds
+                      </span>
+                      <span className="flex items-center">
+                        <FaBath className="mr-2 text-blue-600 w-4 h-4" />
+                        {listing.baths} baths
+                      </span>
+                      <span className="flex items-center">
+                        <FaRulerCombined className="mr-2 text-blue-600 w-4 h-4" />
+                        {listing.sqft} sqft
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between pt-6 border-t border-gray-100">
+                      <button className="text-blue-600 font-semibold hover:text-blue-700 transition-colors text-lg">
+                        View Details
+                      </button>
+                      <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:shadow-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-medium shadow-lg">
+                        Schedule Tour
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </RevealOnScroll>
     </div>

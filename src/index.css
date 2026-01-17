@@ -7,32 +7,39 @@
 @tailwind utilities;
 /* csslint ignore:end */
 
-/* Custom styles that don't conflict with Tailwind */
+/* Premium custom styles that don't conflict with Tailwind */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
 }
 
-/* Additional custom styles */
+/* Additional premium custom styles */
 .gradient-x {
   background-size: 200% 200%;
   animation: gradient-x 15s ease infinite;
 }
 
 .float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { 
+    transform: translateY(0); 
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  50% { 
+    transform: translateY(-15px); 
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 @keyframes gradient-x {
@@ -49,32 +56,38 @@ body {
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   33% {
     transform: translate(30px, -50px) scale(1.1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   66% {
     transform: translate(-20px, 20px) scale(0.9);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   100% {
     transform: translate(0px, 0px) scale(1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-/* Scrollbar styling */
+/* Premium scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8fafc;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c5c5c5;
-  border-radius: 4px;
+  background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+  border-radius: 10px;
+  border: 2px solid #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: linear-gradient(to bottom, #1d4ed8, #1e40af);
 }
