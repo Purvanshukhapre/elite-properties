@@ -1,93 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* autoprefixer: off */
-/* csslint ignore:start */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* csslint ignore:end */
 
-/* Premium custom styles that don't conflict with Tailwind */
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+/* Premium Global Styles */
+:root {
+  /* Premium Color Variables */
+  --premium-midnight: #0F172A;
+  --premium-sapphire: #1E3A8A;
+  --premium-royal: #3B82F6;
+  --premium-azure: #60A5FA;
+  --premium-amethyst: #8B5CF6;
+  --premium-emerald: #10B981;
+  --premium-gold: #F59E0B;
+  --premium-platinum: #9CA3AF;
+  --premium-onyx: #111827;
+  --premium-obsidian: #1F2937;
+  --premium-pearl: #F9FAFB;
+  --premium-ivory: #FEF7ED;
 }
 
-/* Additional premium custom styles */
-.gradient-x {
-  background-size: 200% 200%;
-  animation: gradient-x 15s ease infinite;
+/* Premium Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.float {
-  animation: float 8s ease-in-out infinite;
+@keyframes slideUp {
+  from { 
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 @keyframes float {
-  0%, 100% { 
-    transform: translateY(0); 
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  50% { 
-    transform: translateY(-15px); 
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
 
-@keyframes gradient-x {
-  0%, 100% {
-    background-size: 200% 200%;
-    background-position: left center;
-  }
-  50% {
-    background-size: 200% 200%;
-    background-position: right center;
-  }
+/* Premium Utility Classes */
+.premium-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
+.premium-gradient {
+  background: linear-gradient(135deg, var(--premium-sapphire) 0%, var(--premium-royal) 100%);
 }
 
-/* Premium scrollbar styling */
+.premium-text-gradient {
+  background: linear-gradient(135deg, var(--premium-gold) 0%, var(--premium-amethyst) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.premium-shadow {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.premium-hover-lift {
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.premium-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
+}
+
+/* Body Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--premium-pearl);
+  color: var(--premium-onyx);
+  line-height: 1.6;
+}
+
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
-  border-radius: 10px;
+  background: var(--premium-obsidian);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
-  border-radius: 10px;
-  border: 2px solid #f8fafc;
+  background: var(--premium-platinum);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #1d4ed8, #1e40af);
+  background: var(--premium-azure);
 }

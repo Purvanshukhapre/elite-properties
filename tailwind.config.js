@@ -19,6 +19,10 @@ export default {
         'accent-green': '#059669',
         'border-color': '#E5E7EB',
         'soft-highlight': '#3B82F6',
+        'premium-onyx': '#0F172A', // Slate 900 - Deep Rich Black/Blue
+        'premium-gold': '#D4AF37', // Metallic Gold
+        'premium-sapphire': '#1E3A8A', // Blue 900 - Deep Royal Blue
+        'premium-emerald': '#047857', // Emerald 700 - Rich Green
       },
       fontFamily: {
         'serif-display': ['Playfair Display', 'serif'],
