@@ -26,7 +26,6 @@ const LuxeDock = ({ role = 'user' }) => {
     const menuItems = isSeller ? [
         { id: 'post', label: 'Studio', icon: <HiOutlinePlusCircle />, path: '/user/seller/post-property' },
         { id: 'portfolio', label: 'Console', icon: <HiOutlineBriefcase />, path: '/user/seller/my-properties' },
-        { id: 'vault', label: 'The Vault', icon: <HiOutlineShieldCheck />, path: '/user/settings' },
     ] : [
         { id: 'home', label: 'Home', icon: <HiOutlineHome />, path: '/user/home' },
         { id: 'buy', label: 'Exhibition', icon: <HiOutlineSearch />, path: '/user/buy' },

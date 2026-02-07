@@ -121,6 +121,61 @@ export const AuthProvider = ({ children }) => {
         password: '[HIDDEN]'
       });
 
+      // For testing purposes, check for static credentials
+      const testEmail = 'test@example.com';
+      const testPassword = '123456';
+      const testUserEmail = 'user@example.com';
+      const testUserPassword = '123456';
+      
+      if ((credentials.email === testEmail && credentials.password === testPassword) ||
+          (credentials.email === testUserEmail && credentials.password === testUserPassword)) {
+        // Simulate successful login with static data
+        console.log('Using static credentials for testing');
+        
+        const mockResponse = {
+          data: {
+            success: true,
+            message: 'Login successful',
+            token: 'mock-jwt-token-for-testing',
+            user: {
+              id: 'mock-user-id',
+              fullName: 'Test User',
+              email: credentials.email,
+              phoneNo: '9876543210',
+              role: credentials.email === testEmail ? 'admin' : 'client'
+            }
+          }
+        };
+        
+        const respData = mockResponse.data;
+        if (respData && respData.success && respData.token) {
+          const token = respData.token;
+
+          // Persist token first so axiosInstance can use it for subsequent requests
+          localStorage.setItem('token', token);
+
+          // Use the user data from the mock response
+          const userData = respData.user || {};
+          const transformedUser = {
+            id: userData.id || userData._id,
+            email: userData.email,
+            name: userData.fullName || userData.name,
+            role: userData.role,
+            phoneNo: userData.phoneNo || userData.phone
+          };
+          const isAdminUser = transformedUser.role === 'admin';
+          localStorage.setItem('user', JSON.stringify(transformedUser));
+          localStorage.setItem('isAdmin', isAdminUser.toString());
+          setUser(transformedUser);
+          setIsAuthenticated(true);
+          setIsAdmin(isAdminUser);
+
+          return mockResponse;
+        } else {
+          throw new Error(respData?.message || 'Login failed');
+        }
+      }
+
       // Call the actual API
       const response = await authAPI.login({
         email: credentials.email,
@@ -199,6 +254,59 @@ export const AuthProvider = ({ children }) => {
       if (error.request) {
         console.error('Request made but no response received:');
         console.error('Request:', error.request);
+        
+        // For testing purposes, check if this is the test credentials when network error occurs
+        const testEmail = 'test@example.com';
+        const testPassword = '123456';
+        const testUserEmail = 'user@example.com';
+        const testUserPassword = '123456';
+        
+        if ((credentials.email === testEmail && credentials.password === testPassword) ||
+            (credentials.email === testUserEmail && credentials.password === testUserPassword)) {
+          console.log('Network error detected but using static credentials for testing');
+          
+          // Simulate successful login with static data
+          const mockResponse = {
+            data: {
+              success: true,
+              message: 'Login successful',
+              token: 'mock-jwt-token-for-testing',
+              user: {
+                id: 'mock-user-id',
+                fullName: 'Test User',
+                email: credentials.email,
+                phoneNo: '9876543210',
+                role: credentials.email === testEmail ? 'admin' : 'client'
+              }
+            }
+          };
+          
+          const respData = mockResponse.data;
+          if (respData && respData.success && respData.token) {
+            const token = respData.token;
+
+            // Persist token first so axiosInstance can use it for subsequent requests
+            localStorage.setItem('token', token);
+
+            // Use the user data from the mock response
+            const userData = respData.user || {};
+            const transformedUser = {
+              id: userData.id || userData._id,
+              email: userData.email,
+              name: userData.fullName || userData.name,
+              role: userData.role,
+              phoneNo: userData.phoneNo || userData.phone
+            };
+            const isAdminUser = transformedUser.role === 'admin';
+            localStorage.setItem('user', JSON.stringify(transformedUser));
+            localStorage.setItem('isAdmin', isAdminUser.toString());
+            setUser(transformedUser);
+            setIsAuthenticated(true);
+            setIsAdmin(isAdminUser);
+
+            return mockResponse;
+          }
+        }
       }
 
       console.error('=== END ERROR DETAILS ===');

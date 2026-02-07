@@ -134,18 +134,18 @@ const PremiumInvestorDashboard = () => {
   return (
     <div className="min-h-screen bg-premium-ivory">
       {/* Header */}
-      <div className="hero-premium text-white">
-        <div className="page-container">
+      <div className="bg-gradient-to-r from-premium-sapphire to-premium-royal text-white py-8">
+        <div className="container mx-auto px-6">
           <motion.div
             {...ANIMATION_PRESETS.slideUp}
           >
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 typography-display">Investor Dashboard</h1>
-            <p className="text-premium-pearl">Your premium real estate portfolio management center</p>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2">Investor Dashboard</h1>
+            <p className="text-premium-platinum">Your premium real estate portfolio management center</p>
           </motion.div>
         </div>
       </div>
 
-      <div className="page-container py-12">
+      <div className="container mx-auto px-6 py-12">
         {/* Navigation Tabs */}
         <motion.div
           className="flex flex-wrap gap-2 mb-12"
@@ -154,20 +154,20 @@ const PremiumInvestorDashboard = () => {
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           {tabs.map((tab) => (
-            <motion.button
+            <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center px-6 py-3 rounded-full font-medium transition-all ${
                 activeTab === tab.id
-                  ? 'btn-base btn-primary'
+                  ? 'bg-premium-sapphire text-white shadow-lg'
                   : 'bg-white text-premium-onyx hover:bg-premium-ivory'
               }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <span className="mr-2">{tab.icon}</span>
               {tab.label}
-            </motion.button>
+            </button>
           ))}
         </motion.div>
 
