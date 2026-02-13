@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 import { FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '../../design-system/motion';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import './PropertyMap.css';
 
 // Fix for default marker icons in React-Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -23,8 +24,8 @@ const createCustomIcon = (isFeatured) => {
   
   
   return L.divIcon({
-    html: `<div class="marker-circle ${isFeatured ? 'featured' : 'standard'}" style="background: ${isFeatured ? '#FBBF24' : '#6B7280'}; border: 2px solid #1F2937; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3);${isFeatured ? 'box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);' : ''}"></div>`,
-    className: '',
+    html: `<div class="marker-circle ${isFeatured ? 'featured' : 'standard'}" style="background: ${isFeatured ? '#FBBF24' : '#6B7280'}; border: 2px solid #1F2937; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>`,
+    className: isFeatured ? 'featured-marker' : 'standard-marker',
     iconSize: [30, 30],
     iconAnchor: [15, 15],
     popupAnchor: [0, -15]
@@ -33,6 +34,8 @@ const createCustomIcon = (isFeatured) => {
 
 const PropertyMap = () => {
   const navigate = useNavigate();
+  const mapRef = useRef(null);
+  const hasAnimated = useRef(false);
 
   // Real property data with actual California coordinates
   const properties = [
@@ -90,6 +93,39 @@ const PropertyMap = () => {
     }
   ];
 
+  useEffect(() => {
+    // Set up intersection observer for cinematic zoom on scroll
+    if (!mapRef.current) return;
+
+    const mapInstance = mapRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          setTimeout(() => {
+            if (mapInstance) {
+              mapInstance.flyTo([34.0522, -118.3437], 10, { 
+                duration: 1.2 
+              });
+              hasAnimated.current = true;
+            }
+          }, 100);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    
+    const mapElement = mapInstance.getContainer();
+    if (mapElement) {
+      observer.observe(mapElement);
+    }
+    
+    return () => {
+      if (mapElement) {
+        observer.unobserve(mapElement);
+      }
+    };
+  }, []);
+
   return (
     <section className="py-24 bg-neutral-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -114,9 +150,12 @@ const PropertyMap = () => {
         <div className="relative rounded-[2.5rem] overflow-hidden shadow-xl bg-white/30 backdrop-blur-sm h-[600px] border border-black/5">
           <MapContainer
             center={[34.0522, -118.3437]}
-            zoom={10}
+            zoom={9.5}
             style={{ height: '100%', width: '100%' }}
             scrollWheelZoom={false}
+            whenCreated={(map) => {
+              mapRef.current = map;
+            }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -127,6 +166,20 @@ const PropertyMap = () => {
                 key={property.id}
                 position={[property.lat, property.lng]}
                 icon={createCustomIcon(property.featured)}
+                eventHandlers={{
+                  click: (e) => {
+                    if (mapRef.current) {
+                      mapRef.current.flyTo([property.lat, property.lng], 11, { 
+                        duration: 1.4 
+                      });
+                      
+                      // Slightly delay popup open so camera settles first
+                      setTimeout(() => {
+                        e.target.openPopup();
+                      }, 400);
+                    }
+                  }
+                }}
               >
                 <Popup className="custom-popup" minWidth={280}>
                   <div className="p-4 rounded-xl bg-white shadow-lg">

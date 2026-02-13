@@ -69,33 +69,123 @@ export const deleteProperty = async (id) => {
 
 export const uploadPropertyPictures = async (propertyId, pictures = []) => {
   try {
+    // Validate pictures before upload
+    if (!propertyId) {
+      throw new Error('Property ID is required for picture upload');
+    }
+    
+    if (!pictures || pictures.length === 0) {
+      throw new Error('No pictures provided for upload');
+    }
+
+    // Check file sizes (backend allows max 10MB per image)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    for (let i = 0; i < pictures.length; i++) {
+      const picture = pictures[i];
+      if (picture.size > maxSize) {
+        throw new Error(`Picture "${picture.name}" exceeds 10MB limit. Please compress the image.`);
+      }
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(picture.type)) {
+        throw new Error(`Picture "${picture.name}" has unsupported format. Only JPEG, PNG, GIF, WEBP are allowed.`);
+      }
+    }
+
     const formData = new FormData();
     pictures.forEach((p) => formData.append('pictures', p));
-    // Temporarily increase timeout for this request
+
+    // Increase timeout for image uploads
     const response = await axiosInstance.post(`/api/property/upload/pictures/${propertyId}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 60000 // 60 second timeout for image uploads
+      timeout: 120000 // 2 minute timeout for image uploads
     });
+    
     return { success: true, data: response.data };
   } catch (error) {
     console.error('Upload property pictures error:', error);
-    return { success: false, message: error.response?.data?.message || 'Failed to upload pictures', error };
+    
+    // Handle different types of errors
+    if (error.code === 'ECONNABORTED') {
+      return { 
+        success: false, 
+        message: 'Upload timed out. Image files are too large or network connection is slow. Please try compressing the images or try again later.' 
+      };
+    }
+    
+    if (error.response?.status === 500) {
+      return { 
+        success: false, 
+        message: 'Server error during upload. The images might be too large or the server is temporarily unavailable. Please try again later or compress the images.' 
+      };
+    }
+    
+    return { 
+      success: false, 
+      message: error.response?.data?.message || error.message || 'Failed to upload pictures. Please check file size and format.' 
+    };
   }
 };
 
 export const uploadPropertyVideos = async (propertyId, videos = []) => {
   try {
+    // Validate videos before upload
+    if (!propertyId) {
+      throw new Error('Property ID is required for video upload');
+    }
+    
+    if (!videos || videos.length === 0) {
+      throw new Error('No videos provided for upload');
+    }
+
+    // Check file sizes (backend allows max 10MB per video)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    for (let i = 0; i < videos.length; i++) {
+      const video = videos[i];
+      if (video.size > maxSize) {
+        throw new Error(`Video "${video.name}" exceeds 10MB limit. Please compress or split the video.`);
+      }
+      
+      // Check file type
+      const allowedTypes = ['video/mp4', 'video/mov', 'video/avi', 'video/wmv'];
+      if (!allowedTypes.includes(video.type)) {
+        throw new Error(`Video "${video.name}" has unsupported format. Only MP4, MOV, AVI, WMV are allowed.`);
+      }
+    }
+
     const formData = new FormData();
     videos.forEach((v) => formData.append('videos', v));
-    // Temporarily increase timeout for this request
+
+    // Increase timeout for video uploads
     const response = await axiosInstance.post(`/api/property/upload/videos/${propertyId}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 120000 // 120 second timeout for video uploads
+      timeout: 300000 // 5 minute timeout for video uploads (increased from 120s)
     });
+    
     return { success: true, data: response.data };
   } catch (error) {
     console.error('Upload property videos error:', error);
-    return { success: false, message: error.response?.data?.message || 'Failed to upload videos', error };
+    
+    // Handle different types of errors
+    if (error.code === 'ECONNABORTED') {
+      return { 
+        success: false, 
+        message: 'Upload timed out. Video file is too large or network connection is slow. Please try compressing the video or try again later.' 
+      };
+    }
+    
+    if (error.response?.status === 500) {
+      return { 
+        success: false, 
+        message: 'Server error during upload. The video might be too large or the server is temporarily unavailable. Please try again later or compress the video.' 
+      };
+    }
+    
+    return { 
+      success: false, 
+      message: error.response?.data?.message || error.message || 'Failed to upload videos. Please check file size and format.' 
+    };
   }
 };
 
@@ -160,6 +250,17 @@ export const getSentEnquiries = async () => {
   } catch (error) {
     console.error('Get sent enquiries error:', error);
     return { success: false, message: error.response?.data?.message || 'Failed to get sent enquiries', error };
+  }
+};
+
+// Property Owner Received Enquiries API function
+export const getReceivedEnquiries = async () => {
+  try {
+    const response = await axiosInstance.get('/api/enquiries/received');
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Get received enquiries error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to get received enquiries', error };
   }
 };
 

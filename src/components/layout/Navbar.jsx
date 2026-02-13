@@ -145,6 +145,9 @@ const Navbar = () => {
                         <Link to="/user/saved" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/saved') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Saved Properties</Link>
                         <Link to="/user/viewed" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/viewed') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Recently Viewed</Link>
                         <Link to="/user/enquiries" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/enquiries') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Sent Enquiries</Link>
+                        <Link to="/user/notifications" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/notifications') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Notifications</Link>
+                        <Link to="/user/dashboard" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/dashboard') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Dashboard</Link>
+                        <Link to="/user/post-property" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/post-property') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>List Property</Link>
                         <button
                           onClick={() => {
                             logout();

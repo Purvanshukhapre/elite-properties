@@ -1,0 +1,19 @@
+@keyframes pulseGlow {
+  0% { 
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); 
+  }
+  70% { 
+    box-shadow: 0 0 0 8px rgba(251, 191, 36, 0); 
+  }
+  100% { 
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); 
+  }
+}
+
+.featured-marker {
+  animation: pulseGlow 3s infinite;
+}
+
+.standard-marker {
+  /* No animation for standard markers */
+}

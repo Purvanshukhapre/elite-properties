@@ -20,16 +20,11 @@ const PremiumNavbar = () => {
   ];
 
   const authenticatedNavItems = [
-    { name: 'Home', href: '/user/home', icon: <FaHome className="w-4 h-4" /> },
-    { name: 'Buy', href: '/user/buy', icon: <FaBuilding className="w-4 h-4" /> },
-    { name: 'Rent', href: '/user/rent', icon: <FaBuilding className="w-4 h-4" /> },
-    { name: 'Invest', href: '/user/invest', icon: <FaGlobe className="w-4 h-4" /> },
-    { name: 'Post Property', href: '/user/post-property', icon: <FaBuilding className="w-4 h-4" /> },
+    { name: 'Home', href: '/', icon: <FaHome className="w-4 h-4" /> },
     { name: 'My Properties', href: '/user/my-properties', icon: <FaChartLine className="w-4 h-4" /> },
-    { name: 'Leads', href: '/user/leads', icon: <FaChartLine className="w-4 h-4" /> },
     { name: 'Saved', href: '/user/saved', icon: <FaGlobe className="w-4 h-4" /> },
-    { name: 'Visits', href: '/user/visits', icon: <FaUser className="w-4 h-4" /> },
     { name: 'Dashboard', href: '/user/dashboard', icon: <FaChartLine className="w-4 h-4" /> },
+    { name: 'Notifications', href: '/user/notifications', icon: <FaChartLine className="w-4 h-4" /> },
     { name: 'Profile', href: '/user/profile', icon: <FaUser className="w-4 h-4" /> }
   ];
 
@@ -57,7 +52,7 @@ const PremiumNavbar = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Link 
-              to={isAuthenticated ? "/user/home" : "/"}
+              to="/"
               className="text-2xl font-bold bg-gradient-to-r from-premium-sapphire to-premium-royal bg-clip-text text-transparent"
             >
               Elite Properties

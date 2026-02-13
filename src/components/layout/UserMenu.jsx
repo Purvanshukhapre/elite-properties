@@ -36,10 +36,22 @@ const UserMenu = () => {
         Sent Enquiries
       </Link>
       <Link 
-        to="/user/seller/post-property" 
+        to="/user/notifications" 
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
       >
-        Post Property
+        Notifications
+      </Link>
+      <Link 
+        to="/user/dashboard" 
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+      >
+        Dashboard
+      </Link>
+      <Link 
+        to="/user/post-property" 
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+      >
+        List Property
       </Link>
       <button
         onClick={logout}

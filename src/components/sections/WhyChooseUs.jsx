@@ -38,13 +38,13 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="py-24 bg-premium-onyx text-white relative overflow-hidden">
-      {/* Abstract Background */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-premium-sapphire/20 blur-[120px]"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-full bg-premium-gold/10 blur-[100px]"></div>
+    <section className="py-32 bg-premium-onyx text-white relative overflow-hidden">
+      {/* Subtle Abstract Background */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-premium-sapphire/10 blur-[80px]"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-full bg-premium-gold/5 blur-[60px]"></div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
 
           {/* Header Content */}
           <motion.div
@@ -53,16 +53,16 @@ const WhyChooseUs = () => {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.span variants={fadeInUp} className="text-premium-gold font-bold tracking-widest text-xs uppercase mb-4 block">
+            <motion.span variants={fadeInUp} className="text-premium-gold font-medium tracking-wide text-sm uppercase mb-6 block">
               Why Elite Properties
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-display font-medium mb-6 leading-tight text-white">
+            <motion.h2 variants={fadeInUp} className="text-5xl md:text-6xl font-display font-normal mb-8 leading-tight text-white">
               Redefining the Standard <br /> of Luxury Real Estate
             </motion.h2>
             <motion.p variants={fadeInUp} className="text-gray-300 text-lg font-light leading-relaxed mb-8 max-w-lg">
               We combine traditional white-glove service with modern technology to deliver an unmatched experience for buyers, sellers, and investors.
             </motion.p>
-            <motion.button variants={fadeInUp} className="bg-white text-premium-onyx px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-premium-gold hover:text-white transition-all duration-300">
+            <motion.button variants={fadeInUp} className="bg-transparent border border-gray-600 text-white px-8 py-4 rounded-lg font-medium uppercase tracking-wider text-xs hover:border-premium-gold hover:text-premium-gold transition-all duration-300">
               Get to Know Us
             </motion.button>
           </motion.div>
@@ -73,19 +73,19 @@ const WhyChooseUs = () => {
             whileInView="show"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid sm:grid-cols-2 gap-6"
+            className="grid sm:grid-cols-2 gap-8"
           >
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
                 variants={fadeInUp}
-                className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+                className="p-8 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
               >
-                <div className="text-premium-gold text-2xl mb-4">
+                <div className="text-premium-gold/70 text-2xl mb-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-display font-medium mb-2">{feature.title}</h3>
-                <p className="text-gray-400 font-light text-sm">
+                <h3 className="text-xl font-display font-normal mb-4 text-white">{feature.title}</h3>
+                <p className="text-gray-400 font-light text-base leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>

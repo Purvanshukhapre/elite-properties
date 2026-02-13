@@ -18,17 +18,14 @@ import { PropertyMap } from '../components/widgets';
 import { AboutPage, ContactPage, ServicesPage } from '../components/pages-legacy';
 
 // User pages
-import UserHome from '../features/user/pages/UserHome';
-import UserInvest from '../features/user/pages/UserInvest';
 import UserMyProperties from '../features/user/pages/UserMyProperties';
-import UserLeads from '../features/user/pages/UserLeads';
 import UserSaved from '../features/user/pages/UserSaved';
-import UserVisits from '../features/user/pages/UserVisits';
 import UserProfile from '../features/user/pages/UserProfile';
-import UserSettings from '../features/user/pages/UserSettings';
-import UserSupport from '../features/user/pages/UserSupport';
 import ViewedProperties from '../features/user/pages/ViewedProperties';
 import EnquiriesSent from '../features/user/pages/EnquiriesSent';
+import PropertyInquiries from '../features/user/pages/PropertyInquiries';
+import NotificationCenter from '../features/user/pages/NotificationCenter';
+import DashboardOverview from '../features/user/pages/DashboardOverview';
 
 // Admin pages
 import {
@@ -41,7 +38,7 @@ import {
 
 // --- Guards ---
 
-// 1. Public Guard (Redirects logged-in users to dashboard)
+// 1. Public Guard (Allows access to public pages, redirects logged-in admins to admin dashboard)
 const PublicOnlyRoute = ({ children }) => {
   const { isAuthenticated, isAdmin, loading } = useAuth();
 
@@ -161,18 +158,15 @@ const AppRoutes = () => {
             <PublicLayout />
           </ProtectedRoute>
         }>
-          <Route path="/user/home" element={<UserHome />} />
+          <Route path="/user/dashboard" element={<DashboardOverview />} />
           <Route path="/user/properties" element={<PropertyList />} />
-          <Route path="/user/invest" element={<UserInvest />} />
           <Route path="/user/saved" element={<UserSaved />} />
-          <Route path="/user/visits" element={<UserVisits />} />
-          <Route path="/user/leads" element={<UserLeads />} />
-
           <Route path="/user/profile" element={<UserProfile />} />
-          <Route path="/user/settings" element={<UserSettings />} />
-          <Route path="/user/support" element={<UserSupport />} />
           <Route path="/user/viewed" element={<ViewedProperties />} />
           <Route path="/user/enquiries" element={<EnquiriesSent />} />
+          <Route path="/user/inquiries" element={<PropertyInquiries />} />
+          <Route path="/user/notifications" element={<NotificationCenter />} />
+          <Route path="/user/post-property" element={<PostProperty />} />
         </Route>
 
 
