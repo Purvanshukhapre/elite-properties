@@ -1,203 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
-
-/* Design tokens & utility mappings for Premium Brand */
-:root {
-  /* Background */
-  --premium-bg: #f7f6f5; /* soft off-white */
-
-  /* Primary */
-  --premium-sapphire: #1E3A8A;
-  --premium-royal: #3B82F6;
-  --premium-azure: #60A5FA;
-
-  /* Secondary / Accents */
-  --premium-amethyst: #8B5CF6;
-  --premium-emerald: #10B981;
-  --premium-gold: #F59E0B;
-  --premium-platinum: #9CA3AF;
-
-  /* Luxury neutrals */
-  --premium-onyx: #111827;
-  --premium-obsidian: #1F2937;
-  --premium-pearl: #F9FAFB;
-  --premium-ivory: #FEF7ED;
-
-  /* Shadows */
-  --premium-shadow-1: 0 10px 30px rgba(17,24,39,0.06);
-}
-
-/* Strict app tokens required by master redesign */
-:root {
-  --app-bg: #F9FAFB; /* app background */
-  --card-bg: #FFFFFF;
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --primary-action: #2563EB;
-  --primary-action-hover: #1D4ED8;
-}
-
-/* Utility color classes used across components */
-.text-premium-sapphire { color: var(--premium-sapphire) !important; }
-.text-premium-royal { color: var(--premium-royal) !important; }
-.text-premium-gold { color: var(--premium-gold) !important; }
-.text-premium-onyx { color: var(--premium-onyx) !important; }
-.text-premium-platinum { color: var(--premium-platinum) !important; }
-
-.text-premium-pearl { color: var(--premium-pearl) !important; }
-
-.bg-premium-ivory { background-color: var(--premium-ivory) !important; }
-.bg-premium-pearl { background-color: var(--premium-pearl) !important; }
-.bg-premium-sapphire { background-color: var(--premium-sapphire) !important; }
-.bg-premium-royal { background-color: var(--premium-royal) !important; }
-.bg-premium-gold { background-color: var(--premium-gold) !important; }
-.bg-premium-emerald { background-color: var(--premium-emerald) !important; }
-
-.bg-premium-sapphire\/20 { background-color: rgba(30,58,138,0.2) !important; }
-.bg-premium-royal\/10 { background-color: rgba(59,130,246,0.1) !important; }
-.bg-premium-gold\/10 { background-color: rgba(245,158,11,0.08) !important; }
-.bg-premium-amethyst { background-color: var(--premium-amethyst) !important; color: white !important; }
-.bg-premium-amethyst\/10 { background-color: rgba(139,92,246,0.08) !important; }
-
-.border-premium-gold\/20 { border-color: rgba(245,158,11,0.2) !important; }
-
-/* Additional opacity helpers used in components */
-.bg-premium-emerald\/20 { background-color: rgba(16,185,129,0.2) !important; }
-.bg-premium-gold\/20 { background-color: rgba(245,158,11,0.2) !important; }
-.bg-premium-platinum\/20 { background-color: rgba(156,163,175,0.2) !important; }
-.bg-premium-platinum\/10 { background-color: rgba(156,163,175,0.1) !important; }
-.bg-premium-emerald { background-color: var(--premium-emerald) !important; color: white !important; }
-
-.border-premium-platinum { border-color: var(--premium-platinum) !important; }
-.border-premium-platinum\/10 { border-color: rgba(156,163,175,0.1) !important; }
-.border-premium-platinum\/20 { border-color: rgba(156,163,175,0.2) !important; }
-
-.shadow-premium { box-shadow: var(--premium-shadow-1) !important; }
-
-.border-premium-sapphire { border-color: var(--premium-sapphire) !important; }
-
-/* Typography helpers */
-.typography-display { font-family: 'Playfair Display', serif; }
-.typography-sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
-
-/* Navbar helper */
-.navbar-premium { background-color: rgba(255,255,255,0.96); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(156,163,175,0.08); }
-
-/* Button soft tactile focus */
-.btn-soft:focus { box-shadow: 0 8px 30px rgba(17,24,39,0.06); transform: translateY(-2px); }
-
-/* End tokens */
-
-/* Hero / Callout styles */
-.hero-premium {
-  background: var(--primary-action);
-  box-shadow: inset 0 -40px 60px rgba(2,6,23,0.06);
-}
-
-.hero-premium .container { position: relative; z-index: 2; }
-
-/* Global centered page container (max 1280px, padding 24px) */
-.page-container {
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-/* Navbar strict sizing */
-.navbar-strict {
-  width: 100%;
-  height: 72px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-
-.navbar-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 72px;
-}
-
-/* Nav items */
-.nav-items { display:flex; gap:24px; align-items:center; }
-.nav-item { font-size:14px; font-weight:500; color:var(--text-secondary); padding:6px 0; position:relative; }
-.nav-item:hover { color: var(--primary-action); }
-.nav-item.active::after { content:''; position:absolute; left:0; right:0; bottom:-12px; height:2px; background:var(--primary-action); border-radius:2px; width:40%; margin:0 auto; }
-
-/* Cards grid rules */
-.cards-grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:24px; }
-@media (max-width: 1024px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .cards-grid { grid-template-columns: 1fr; } }
-
-/* Card baseline */
-.card-premium { background: var(--card-bg); border-radius: 16px; padding:20px; min-height:520px; box-shadow: 0 6px 18px rgba(15,23,42,0.04); border:1px solid rgba(15,23,42,0.04); overflow:hidden; display:flex; flex-direction:column; }
-.card-image { height:240px; width:100%; overflow:hidden; border-radius:12px; }
-.card-image img { width:100%; height:100%; object-fit:cover; transition: transform 0.2s ease; }
-.card-image:hover img { transform: scale(1.03); }
-.card-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(2,6,23,0.18) 0%, rgba(2,6,23,0.02) 40%); }
-
-/* Button system enforcement */
-.btn-base { height:48px; padding:0 20px; border-radius:10px; font-size:14px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; border:none; }
-.btn-primary { background:var(--primary-action); color:white; }
-.btn-primary:hover { background:var(--primary-action-hover); box-shadow: 0 6px 18px rgba(37,99,235,0.12); }
-.btn-secondary { background:transparent; border:1px solid rgba(15,23,42,0.08); color:var(--text-primary); }
-
-/* Inputs */
-.input-premium { height:48px; padding:0 12px; border-radius:10px; border:1px solid #CBD5E1; font-size:14px; background: #fff; }
-.label-premium { display:block; margin-bottom:8px; font-weight:600; color:var(--text-primary); }
-
-/* Hero sizing */
-.hero-premium { min-height:420px; display:flex; align-items:center; }
-
-/* Utility to prevent horizontal overflow */
-html,body,#root { overflow-x:hidden; }
-
-/* Admin page — authoritative, flat background and solid form */
-.admin-login-bg {
-  background-color: #F8FAFC; /* flat calm background for admin */
-  position: relative;
-}
-
-.admin-login-bg::before { content: none; }
-
-/* Stronger, more authoritative form card */
-.admin-form-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(15,23,42,0.06);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 28px;
-}
-
-/* Left panel simplified and neutral */
-.admin-left-panel {
-  background: transparent;
-  border-radius: 12px;
-  padding: 28px 32px;
-  position: relative;
-}
-
-.admin-accent-vertical { display:none; }
-
-/* Remove decorative chips/skyline for seriousness */
-.left-stats { display:none; }
-.glass-chip { display:none; }
-.float-slow { display:none; }
-.admin-skyline { display:none; }
-.dot-pattern { display:none; }
-
-/* Admin-specific container width */
-.admin-container { max-width: 1100px; margin-left:auto; margin-right:auto; padding-left:24px; padding-right:24px; }
-
-
 /* Premium Global Styles for SaaS-Level Design */
 
 /* Base styles for consistent typography */
@@ -206,8 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  background-color: var(--premium-bg);
-  color: var(--premium-obsidian);
+  background-color: #f8fafc;
+  color: #1f2937;
 }
 
 /* Smooth transition classes */
@@ -319,12 +119,25 @@ body {
   animation: slow-scale 30s ease-in-out infinite alternate;
 }
 
+.hero-video-scale {
+  animation: cinematic-scale 20s linear infinite alternate;
+}
+
 @keyframes slow-scale {
   0% {
     transform: scale(1);
   }
   100% {
     transform: scale(1.08);
+  }
+}
+
+@keyframes cinematic-scale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.02);
   }
 }
 

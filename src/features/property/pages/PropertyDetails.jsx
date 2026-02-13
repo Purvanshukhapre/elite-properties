@@ -5,7 +5,9 @@ import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaHeart, FaShare, FaExp
 import { useAuth } from '../../../context/AuthContext';
 import { fadeInUp, staggerContainer } from '../../../design-system/motion';
 import { useScrollReveal } from '../../../hooks/useScrollReveal';
-import { getPropertyById } from '../../../api/property.api';
+import { getPropertyById, sendEnquiry } from '../../../api/property.api';
+import Modal from '../../../components/common/Modal';
+import Input from '../../../components/common/Input';
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -14,9 +16,58 @@ const PropertyDetails = () => {
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [favorites, setFavorites] = useState({});
-  const { isAuthenticated } = useAuth();
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [enquiryData, setEnquiryData] = useState({
+    message: '',
+    propertyId: id
+  });
+  const [enquiryLoading, setEnquiryLoading] = useState(false);
+  const [enquirySuccess, setEnquirySuccess] = useState(false);
+  const [enquiryError, setEnquiryError] = useState(null);
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { ref, controls } = useScrollReveal();
+  
+  const closeModal = () => {
+    setShowContactModal(false);
+    setEnquiryData({ message: '', propertyId: id });
+    setEnquiryLoading(false);
+    setEnquirySuccess(false);
+    setEnquiryError(null);
+  };
+  
+  const submitEnquiry = async (e) => {
+    e.preventDefault();
+    if (!isAuthenticated || !user) {
+      navigate('/login');
+      return;
+    }
+    
+    setEnquiryLoading(true);
+    setEnquiryError(null);
+    
+    try {
+      const response = await sendEnquiry({
+        ...enquiryData,
+        propertyId: id,
+        recipientId: property?.userId  // Assuming property has a userId field for the owner
+      });
+      
+      if (response.success) {
+        setEnquirySuccess(true);
+        // Reset form after success
+        setTimeout(() => {
+          closeModal();
+        }, 1500);
+      } else {
+        setEnquiryError(response.message || 'Failed to send inquiry');
+      }
+    } catch (error) {
+      setEnquiryError(error.message || 'An error occurred while sending the inquiry');
+    } finally {
+      setEnquiryLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -276,7 +327,7 @@ const PropertyDetails = () => {
                   {property.contactInfo?.[0] || 'E'}
                 </div>
                 <div className="ml-5">
-                  <div className="font-black text-xl text-gray-900 uppercase tracking-tighter italic">Custodian</div>
+                  <div className="font-black text-xl text-gray-900 uppercase tracking-tighter italic">Owner</div>
                   <div className="text-[9px] text-premium-gold font-black uppercase tracking-[0.3em] px-2 py-1 bg-premium-gold/5 rounded-full mt-1">Direct Access</div>
                 </div>
               </div>
@@ -288,25 +339,20 @@ const PropertyDetails = () => {
                 </div>
 
                 <button
-                  onClick={() => handleAction(() => console.log('Initiating Secure Channel'))}
+                  onClick={() => handleAction(() => setShowContactModal(true))}
                   className="w-full py-5 bg-premium-sapphire text-white rounded-[2rem] font-black uppercase tracking-[0.15em] text-xs hover:bg-blue-900 transition-all shadow-xl hover:-translate-y-1"
                 >
-                  Contact Custodian
+                  Contact Owner
                 </button>
-                <button
-                  onClick={() => handleAction(() => console.log('Requesting Intelligence Brief'))}
-                  className="w-full py-5 bg-white border-2 border-premium-sapphire text-premium-sapphire rounded-[2rem] font-black uppercase tracking-[0.15em] text-xs hover:bg-blue-50 transition-all"
-                >
-                  Request Briefing
-                </button>
+
               </div>
 
               <div className="mt-10 pt-10 border-t border-gray-50 flex justify-between items-center px-2">
                 <div className="text-center">
                   <p className="text-[8px] font-black text-gray-400 uppercase mb-1">Status</p>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                    <span className="text-[10px] font-black uppercase text-gray-900">Active</span>
+                    <div className={`w-2 h-2 rounded-full ${property.propertyStatus?.toLowerCase() === 'available' || property.propertyStatus?.toLowerCase() === 'active' ? 'bg-emerald-500 animate-pulse' : property.propertyStatus?.toLowerCase() === 'sold' ? 'bg-red-500' : property.propertyStatus?.toLowerCase() === 'rented' ? 'bg-yellow-500' : 'bg-gray-500'}`}></div>
+                    <span className="text-[10px] font-black uppercase text-gray-900">{property.propertyStatus || 'Active'}</span>
                   </div>
                 </div>
                 <div className="text-center">
@@ -322,6 +368,56 @@ const PropertyDetails = () => {
           </div>
         </div>
       </div>
+      
+      {/* Contact Owner Modal */}
+      <Modal isOpen={showContactModal} onClose={closeModal}>
+        <div className="p-6 max-w-md w-full">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Send Inquiry to Owner</h3>
+          
+          {enquirySuccess ? (
+            <div className="mb-6 p-4 bg-green-100 text-green-800 rounded-lg">
+              <p>Your inquiry has been sent successfully!</p>
+            </div>
+          ) : (
+            <form onSubmit={submitEnquiry}>
+              <div className="mb-4">
+                <Input
+                  label="Your Message"
+                  type="textarea"
+                  value={enquiryData.message}
+                  onChange={(e) => setEnquiryData({...enquiryData, message: e.target.value})}
+                  placeholder="Enter your inquiry message here..."
+                  required
+                  rows={4}
+                />
+              </div>
+              
+              {enquiryError && (
+                <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-lg">
+                  <p>{enquiryError}</p>
+                </div>
+              )}
+              
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="flex-1 py-3 px-4 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={enquiryLoading}
+                  className="flex-1 py-3 px-4 bg-premium-sapphire text-white rounded-xl font-medium hover:bg-blue-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {enquiryLoading ? 'Sending...' : 'Send Inquiry'}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };

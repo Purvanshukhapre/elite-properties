@@ -3,7 +3,13 @@ import axiosInstance from './axiosInstance';
 // Property API functions strictly matching backend spec
 export const getAllProperties = async (params = {}) => {
   try {
-    const response = await axiosInstance.get('/api/property/posts', { params });
+    // Exclude pending properties from public listings by default, but allow override
+    const queryParams = { ...params };
+    // Only set default status to 'approved' if no propertyStatus is provided
+    if (!queryParams.propertyStatus) {
+      queryParams.propertyStatus = 'approved';
+    }
+    const response = await axiosInstance.get('/api/property/posts', { params: queryParams });
     return { success: true, data: response.data };
   } catch (error) {
     console.error('Get properties error:', error);
@@ -65,8 +71,10 @@ export const uploadPropertyPictures = async (propertyId, pictures = []) => {
   try {
     const formData = new FormData();
     pictures.forEach((p) => formData.append('pictures', p));
+    // Temporarily increase timeout for this request
     const response = await axiosInstance.post(`/api/property/upload/pictures/${propertyId}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 60000 // 60 second timeout for image uploads
     });
     return { success: true, data: response.data };
   } catch (error) {
@@ -79,8 +87,10 @@ export const uploadPropertyVideos = async (propertyId, videos = []) => {
   try {
     const formData = new FormData();
     videos.forEach((v) => formData.append('videos', v));
+    // Temporarily increase timeout for this request
     const response = await axiosInstance.post(`/api/property/upload/videos/${propertyId}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 120000 // 120 second timeout for video uploads
     });
     return { success: true, data: response.data };
   } catch (error) {
@@ -109,6 +119,81 @@ export const deletePropertyVideo = async (propertyId, videoUrl) => {
   }
 };
 
+// Property Statistics API function
+export const getPropertyStats = async () => {
+  try {
+    const response = await axiosInstance.get('/api/property/stats');
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Get property stats error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to get property stats', error };
+  }
+};
+
+// User Viewed Properties API function
+export const getUserViewedProperties = async () => {
+  try {
+    const response = await axiosInstance.get('/api/property/posts/viewed');
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Get user viewed properties error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to get viewed properties', error };
+  }
+};
+
+// Send Enquiry API function
+export const sendEnquiry = async (enquiryData) => {
+  try {
+    const response = await axiosInstance.post('/api/enquiries/send', enquiryData);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Send enquiry error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to send enquiry', error };
+  }
+};
+
+// User Sent Enquiries API function
+export const getSentEnquiries = async () => {
+  try {
+    const response = await axiosInstance.get('/api/enquiries/sent');
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Get sent enquiries error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to get sent enquiries', error };
+  }
+};
+
+// Saved Properties API functions
+export const saveProperty = async (propertyId) => {
+  try {
+    const response = await axiosInstance.post(`/api/property/posts/${propertyId}/save`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Save property error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to save property', error };
+  }
+};
+
+export const unsaveProperty = async (propertyId) => {
+  try {
+    const response = await axiosInstance.delete(`/api/property/posts/${propertyId}/unsave`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Unsave property error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to unsave property', error };
+  }
+};
+
+export const getSavedProperties = async () => {
+  try {
+    const response = await axiosInstance.get('/api/property/posts/saved');
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Get saved properties error:', error);
+    return { success: false, message: error.response?.data?.message || 'Failed to get saved properties', error };
+  }
+};
+
 const propertyAPI = {
   getAllProperties,
   getPropertyById,
@@ -119,7 +204,14 @@ const propertyAPI = {
   uploadPropertyPictures,
   uploadPropertyVideos,
   deletePropertyPicture,
-  deletePropertyVideo
+  deletePropertyVideo,
+  getPropertyStats,
+  sendEnquiry,
+  getUserViewedProperties,
+  getSentEnquiries,
+  saveProperty,
+  unsaveProperty,
+  getSavedProperties
 };
 
 export default propertyAPI;

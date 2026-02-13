@@ -1,9 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
 
-const FeaturedPropertyCard = ({ property, index }) => {
+const FeaturedPropertyCard = ({ property }) => {
     // API Mapping & Fallbacks
     const id = property._id || property.id;
     const title = `${property.bhk} BHK ${property.propertyCategory} in ${property.locality}`;
@@ -14,12 +13,47 @@ const FeaturedPropertyCard = ({ property, index }) => {
     const floors = property.floor || 'N/A';
     const size = property.buildArea ? `${property.buildArea} sqft` : 'N/A';
     const description = property.propertyDetails || 'No description available for this elite property.';
+    
+    const [hover, setHover] = useState(false);
+    const [rotation, setRotation] = useState({ x: 0, y: 0 });
+    const cardRef = useRef(null);
 
     return (
         <Link to={`/properties/${id}`} className="block h-full">
-            <motion.div
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 ease-out border border-gray-100 flex flex-col h-full cursor-pointer"
-                whileHover={{ y: -5 }}
+            <div
+                ref={cardRef}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm transition-all duration-500 ease-out border border-gray-100 flex flex-col h-full cursor-pointer"
+                style={
+                    {
+                        transform: hover 
+                            ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.05, 1.05, 1.05)`
+                            : 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
+                        transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+                        boxShadow: hover
+                            ? '0 20px 40px rgba(0,0,0,0.1)' // Stronger shadow on hover
+                            : '0 4px 6px rgba(0,0,0,0.05)' // Default shadow
+                    }
+                }
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => {
+                    setHover(false);
+                    setRotation({ x: 0, y: 0 });
+                }}
+                onMouseMove={(e) => {
+                    if (!cardRef.current) return;
+                    
+                    const rect = cardRef.current.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = ((x - centerX) / centerX) * 10; // Max 10deg rotation
+                    const rotateX = -((y - centerY) / centerY) * 10; // Invert for natural feel
+                    
+                    setRotation({ x: rotateX, y: rotateY });
+                }}
             >
                 {/* Image Container - Fixed height for stability */}
                 <div className="relative h-[280px] overflow-hidden bg-gray-200">
@@ -86,7 +120,7 @@ const FeaturedPropertyCard = ({ property, index }) => {
                         </span>
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </Link>
     );
 };

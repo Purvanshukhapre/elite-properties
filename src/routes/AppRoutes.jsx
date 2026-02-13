@@ -5,13 +5,12 @@ import { useScrollToTop } from '../utils/scrollToTop';
 
 // Layouts
 import PublicLayout from '../components/layout/PublicLayout';
-import UserLayout from '../components/layout/UserLayout';
-import SellerLayout from '../components/layout/SellerLayout';
+import AuthLayout from '../components/layout/AuthLayout';
 import AdminLayout from '../components/layout/AdminLayout';
 
 // Feature pages (Existing)
 import { Login, Register, VerifyEmail, ForgotPassword, ResetPasswordWithOTP } from '../features/auth';
-import { PropertyList, PropertyDetails, BuyPage, RentPage, SellPage, PostProperty } from '../features/property';
+import { PropertyList, PropertyDetails, PostProperty } from '../features/property';
 
 // Public pages
 import { HeroSection, FeaturedListings, BuyerCategories, WhyChooseUs, Testimonials, CallToAction } from '../components/sections';
@@ -20,17 +19,16 @@ import { AboutPage, ContactPage, ServicesPage } from '../components/pages-legacy
 
 // User pages
 import UserHome from '../features/user/pages/UserHome';
-import UserBuy from '../features/user/pages/UserBuy';
-import UserRent from '../features/user/pages/UserRent';
 import UserInvest from '../features/user/pages/UserInvest';
 import UserMyProperties from '../features/user/pages/UserMyProperties';
 import UserLeads from '../features/user/pages/UserLeads';
 import UserSaved from '../features/user/pages/UserSaved';
 import UserVisits from '../features/user/pages/UserVisits';
-import UserDashboard from '../features/user/pages/UserDashboard';
 import UserProfile from '../features/user/pages/UserProfile';
 import UserSettings from '../features/user/pages/UserSettings';
 import UserSupport from '../features/user/pages/UserSupport';
+import ViewedProperties from '../features/user/pages/ViewedProperties';
+import EnquiriesSent from '../features/user/pages/EnquiriesSent';
 
 // Admin pages
 import {
@@ -49,9 +47,8 @@ const PublicOnlyRoute = ({ children }) => {
 
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
-  if (isAuthenticated) {
-    if (isAdmin) return <Navigate to="/admin/dashboard" replace />;
-    return <Navigate to="/user/home" replace />;
+  if (isAuthenticated && isAdmin) {
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   return children;
@@ -79,7 +76,7 @@ const PostPropertyRoute = ({ children }) => {
 
   // If no postProperty intent, block access
   if (loginIntent !== 'postProperty') {
-    return <Navigate to="/user/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
@@ -131,61 +128,62 @@ const AppRoutes = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/services" element={<ServicesPage />} />
 
-          {/* Landing pages for specific intents */}
-          <Route path="/buy" element={<BuyPage />} />
-          <Route path="/rent" element={<RentPage />} />
-          <Route path="/sell" element={<SellPage />} />
-          <Route path="/commercial" element={
-            <PropertyList
-              initialType="commercial"
-              title="Commercial Real Estate"
-              subtitle="Premium office spaces and commercial properties in prime locations."
-              backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&h=900&fit=crop"
-            />
-          } />
 
-          {/* Auth Entry Points */}
+
+        </Route>
+        
+        {/* =================================================================
+              1. AUTH ROUTES (Login, Registration)
+              Layout: AuthLayout (No footer)
+              Guard: PublicOnlyRoute (No logged-in users)
+             ================================================================= */}
+        <Route element={
+          <PublicOnlyRoute>
+            <AuthLayout />
+          </PublicOnlyRoute>
+        }>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password-otp" element={<ResetPasswordWithOTP />} />
         </Route>
+        
+
 
         {/* =================================================================
-              2. USER ROUTES (Authenticated App)
-              Layout: UserLayout (App Shell)
+              2. PROTECTED USER PAGES (Accessible when logged in)
+              Layout: PublicLayout (Same as public pages)
               Guard: ProtectedRoute
              ================================================================= */}
-        <Route path="/user" element={
+        <Route element={
           <ProtectedRoute>
-            <UserLayout />
+            <PublicLayout />
           </ProtectedRoute>
         }>
-          <Route path="home" element={<UserHome />} />
-          <Route path="buy" element={<UserBuy />} />
-          <Route path="rent" element={<UserRent />} />
-          <Route path="invest" element={<UserInvest />} />
-          <Route path="saved" element={<UserSaved />} />
-          <Route path="visits" element={<UserVisits />} />
-          <Route path="leads" element={<UserLeads />} />
-          <Route path="dashboard" element={<UserDashboard />} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="settings" element={<UserSettings />} />
-          <Route path="support" element={<UserSupport />} />
-          {/* Fallback */}
-          <Route index element={<Navigate to="home" replace />} />
+          <Route path="/user/home" element={<UserHome />} />
+          <Route path="/user/properties" element={<PropertyList />} />
+          <Route path="/user/invest" element={<UserInvest />} />
+          <Route path="/user/saved" element={<UserSaved />} />
+          <Route path="/user/visits" element={<UserVisits />} />
+          <Route path="/user/leads" element={<UserLeads />} />
+
+          <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/user/settings" element={<UserSettings />} />
+          <Route path="/user/support" element={<UserSupport />} />
+          <Route path="/user/viewed" element={<ViewedProperties />} />
+          <Route path="/user/enquiries" element={<EnquiriesSent />} />
         </Route>
 
 
         {/* =================================================================
               3. SELLER ROUTES (Focused Flow)
-              Layout: SellerLayout (Minimalist)
+              Layout: PublicLayout (Same as public pages)
               Guard: PostPropertyRoute (Requires intent)
              ================================================================= */}
         <Route path="/user/seller" element={
           <PostPropertyRoute>
-            <SellerLayout />
+            <PublicLayout />
           </PostPropertyRoute>
         }>
           <Route path="post-property" element={<PostProperty />} />

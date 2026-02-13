@@ -36,9 +36,7 @@ const Navbar = () => {
   // Navigation items (different for logged in users)
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Buy', href: '/buy' },
-    { name: 'Rent', href: '/rent' },
-    { name: 'Commercial', href: '/commercial' },
+    { name: 'Properties', href: '/properties' },
     { name: 'Services', href: '/services' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
@@ -60,29 +58,27 @@ const Navbar = () => {
 
   const getNavbarClasses = () => {
     if (isScrolled) {
-      return 'bg-white/95 backdrop-blur-md shadow-md py-3';
+      return 'bg-white/85 backdrop-blur-xl shadow-xl py-2.5';
     }
-    return 'bg-transparent py-5';
+    return 'bg-white/70 backdrop-blur-xl py-4';
   };
 
   const getTextColorClass = () => {
-    if (isScrolled) {
-      return 'text-gray-900';
-    }
-    return 'text-white';
+    // Always use dark text since the background is now lightened
+    return 'text-gray-900';
   };
 
   const textColor = getTextColorClass();
   const navbarClasses = getNavbarClasses();
 
   return (
-    <nav className={`${navbarClasses} fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
+    <nav className={`${navbarClasses} fixed top-0 left-0 right-0 z-50 transition-all duration-250 ease-out border border-white/30 rounded-2xl mx-6 mt-4 shadow-lg`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link
             to="/"
-            className={`text-2xl font-display font-bold ${textColor} transition-colors duration-300 relative group flex items-center gap-2`}
+            className={`text-2xl font-display font-bold ${textColor} transition-all duration-250 relative group flex items-center gap-2 ${isScrolled ? 'scale-95' : ''}`}
             onClick={handleNavClick}
           >
             {BRAND.name}
@@ -94,8 +90,8 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`font-medium ${textColor} transition-all duration-300 relative text-sm uppercase tracking-wide hover:text-premium-gold ${location.pathname === item.href ? 'text-premium-gold' : ''
-                  }`}
+                className={`font-medium ${textColor} transition-all duration-250 relative text-sm uppercase tracking-wide hover:text-premium-gold ${location.pathname === item.href || (item.href !== '/' && location.pathname.startsWith(item.href)) ? 'text-premium-gold' : ''
+                  } after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-premium-gold after:transition-all after:duration-250 after:scale-x-0 hover:after:scale-x-100 ${location.pathname === item.href || (item.href !== '/' && location.pathname.startsWith(item.href)) ? 'after:scale-x-100' : ''}`}
                 onClick={handleNavClick}
               >
                 {item.name}
@@ -109,7 +105,7 @@ const Navbar = () => {
                   navigate('/login');
                   handleNavClick();
                 }}
-                className={`hidden lg:flex items-center gap-2 font-medium ${textColor} border border-current px-5 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:text-premium-gold text-xs uppercase tracking-widest mr-2 opacity-90 hover:opacity-100`}
+                className={`hidden lg:flex items-center gap-2 font-medium ${textColor} border border-current px-5 py-2 rounded-full transition-all duration-250 hover:-translate-y-0.5 hover:text-premium-gold text-xs uppercase tracking-widest mr-2 opacity-90 hover:opacity-100`}
               >
                 Post Property
               </button>
@@ -117,13 +113,16 @@ const Navbar = () => {
 
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
-                <Link
-                  to="/user/saved"
-                  className={`font-medium ${textColor} hover:text-premium-gold transition-colors text-sm uppercase tracking-wide`}
-                  onClick={handleNavClick}
+                <button
+                  onClick={() => {
+                    setLoginIntent('postProperty');
+                    navigate('/user/seller/post-property');
+                    handleNavClick();
+                  }}
+                  className={`hidden lg:flex items-center gap-2 font-medium ${(location.pathname === '/user/seller/post-property' || location.pathname.startsWith('/user/seller')) ? 'text-premium-gold' : textColor} border border-current px-5 py-2 rounded-full transition-all duration-250 hover:-translate-y-0.5 hover:text-premium-gold text-xs uppercase tracking-widest mr-2 opacity-90 hover:opacity-100`}
                 >
-                  Saved
-                </Link>
+                  Post Property
+                </button>
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -142,8 +141,10 @@ const Navbar = () => {
                         <p className="text-xs text-gray-500">{user?.email}</p>
                       </div>
                       <div className="max-h-[calc(100vh-200px)] overflow-y-auto">
-                        <Link to="/user/dashboard" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" onClick={handleNavClick}>Dashboard</Link>
-                        <Link to="/user/profile" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" onClick={handleNavClick}>Profile</Link>
+                        <Link to="/user/profile" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/profile') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Profile</Link>
+                        <Link to="/user/saved" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/saved') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Saved Properties</Link>
+                        <Link to="/user/viewed" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/viewed') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Recently Viewed</Link>
+                        <Link to="/user/enquiries" className={`block px-4 py-3 text-sm transition-colors ${location.pathname.startsWith('/user/enquiries') ? 'text-premium-gold bg-gray-50' : 'text-gray-700 hover:bg-gray-50'}`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Sent Enquiries</Link>
                         <button
                           onClick={() => {
                             logout();
@@ -161,7 +162,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="bg-white text-black font-bold py-3 px-6 rounded-xl hover:bg-gray-100 hover:text-black transition-all duration-300 shadow-lg text-sm"
+                className="bg-white text-black font-bold py-3 px-6 rounded-xl hover:bg-gray-100 hover:text-black transition-all duration-250 shadow-lg text-sm"
                 onClick={handleNavClick}
               >
                 Login
@@ -186,7 +187,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white/95 backdrop-blur-lg border-t border-gray-200 shadow-xl h-screen fixed inset-0 z-[60] pt-20 px-6">
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute top-6 right-6 p-2 text-gray-900"
+            className={`absolute top-6 right-6 p-2 ${textColor}`}
           >
             <FaTimes size={24} />
           </button>
@@ -195,7 +196,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`block text-2xl font-display font-bold text-gray-900 hover:text-premium-gold transition-colors`}
+                className={`block text-2xl font-display font-bold ${location.pathname === item.href || (item.href !== '/' && location.pathname.startsWith(item.href)) ? 'text-premium-gold' : textColor} hover:text-premium-gold transition-colors`}
                 onClick={handleNavClick}
               >
                 {item.name}
@@ -209,14 +210,26 @@ const Navbar = () => {
                     navigate('/login');
                     handleNavClick();
                   }}
-                  className="block w-full border border-gray-900 text-gray-900 font-bold py-3 rounded-xl text-center text-lg hover:bg-gray-50 transition-colors uppercase tracking-widest text-sm"
+                  className={`block w-full border border-gray-900 ${textColor} font-bold py-3 rounded-xl text-center text-lg hover:bg-gray-50 transition-colors uppercase tracking-widest text-sm`}
                 >
                   Post Property
                 </button>
               )}
               {isAuthenticated ? (
                 <>
-                  <Link to="/user/dashboard" className="block text-lg font-medium text-gray-900 mb-4" onClick={handleNavClick}>Dashboard</Link>
+                  <button
+                    onClick={() => {
+                      setLoginIntent('postProperty');
+                      navigate('/user/seller/post-property');
+                      handleNavClick();
+                    }}
+                    className={`block text-lg font-medium ${location.pathname.startsWith('/user/seller') ? 'text-premium-gold' : textColor} mb-4 border border-gray-900 py-3 rounded-xl text-center uppercase tracking-widest`}>
+                    Post Property
+                  </button>
+                  <Link to="/user/profile" className={`block text-lg font-medium ${location.pathname.startsWith('/user/profile') ? 'text-premium-gold' : textColor} mb-4`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Profile</Link>
+                  <Link to="/user/saved" className={`block text-lg font-medium ${location.pathname.startsWith('/user/saved') ? 'text-premium-gold' : textColor} mb-4`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Saved Properties</Link>
+                  <Link to="/user/viewed" className={`block text-lg font-medium ${location.pathname.startsWith('/user/viewed') ? 'text-premium-gold' : textColor} mb-4`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Recently Viewed</Link>
+                  <Link to="/user/enquiries" className={`block text-lg font-medium ${location.pathname.startsWith('/user/enquiries') ? 'text-premium-gold' : textColor} mb-4`} onClick={() => {setLoginIntent(null); handleNavClick();}}>Sent Enquiries</Link>
                   <button
                     onClick={() => {
                       logout();
@@ -228,13 +241,25 @@ const Navbar = () => {
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/login"
-                  className="block w-full bg-black text-white font-bold py-4 rounded-xl text-center text-lg shadow-lg"
-                  onClick={handleNavClick}
-                >
-                  Login / Register
-                </Link>
+                <>
+                  <button
+                    onClick={() => {
+                      setLoginIntent('postProperty');
+                      navigate('/login');
+                      handleNavClick();
+                    }}
+                    className="block w-full border border-gray-900 text-gray-900 font-bold py-3 rounded-xl text-center text-lg hover:bg-gray-50 transition-colors uppercase tracking-widest mb-4"
+                  >
+                    Post Property
+                  </button>
+                  <Link
+                    to="/login"
+                    className="block w-full bg-black text-white font-bold py-4 rounded-xl text-center text-lg shadow-lg"
+                    onClick={handleNavClick}
+                  >
+                    Login / Register
+                  </Link>
+                </>
               )}
             </div>
           </div>

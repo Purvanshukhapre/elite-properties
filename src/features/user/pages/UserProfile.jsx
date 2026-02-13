@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import {
   HiOutlinePencil,
   HiOutlineShieldCheck,
@@ -8,15 +7,37 @@ import {
   HiOutlineMail,
   HiOutlinePhone
 } from 'react-icons/hi';
+import { useAuth } from '../../../context/AuthContext';
 
 const UserProfile = () => {
-  const [user, setUser] = useState({
-    name: "Vikram Singh",
-    email: "vikram@elite.io",
-    phone: "+91 98765 43210",
-    membership: "Institutional Tier 01",
-    since: "January 2024"
-  });
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Please Log In</h2>
+          <p className="text-gray-600">You need to be logged in to view your profile.</p>
+        </div>
+      </div>
+    );
+  }
+  
+  const displayUser = {
+    name: user.name || (user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : user.firstName || user.lastName || 'User'),
+    email: user.email || 'N/A',
+    phone: user.phoneNo || 'N/A',
+    membership: user.role || 'Standard Member',
+    since: user.createdAt ? new Date(user.createdAt).getFullYear() : new Date().getFullYear()
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950 flex flex-col items-center pt-20 pb-40 px-6">
@@ -34,7 +55,7 @@ const UserProfile = () => {
 
         <div className="relative group">
           <div className="w-32 h-32 rounded-[2.5rem] bg-indigo-100 flex items-center justify-center text-indigo-600 border-4 border-white shadow-2xl overflow-hidden">
-            <span className="text-4xl font-serif-display">VS</span>
+            <span className="text-4xl font-serif-display">{displayUser.name.charAt(0)}</span>
           </div>
           <button className="absolute -bottom-2 -right-2 w-10 h-10 bg-slate-950 text-white rounded-xl flex items-center justify-center shadow-xl hover:bg-indigo-600 transition-all">
             <HiOutlinePencil size={18} />
@@ -52,21 +73,21 @@ const UserProfile = () => {
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Legal Nomenclature</label>
                 <div className="flex items-center gap-4 text-xl font-light text-slate-900 border-b border-slate-50 pb-4">
                   <HiOutlineIdentification className="text-indigo-600" />
-                  <span>{user.name}</span>
+                  <span>{displayUser.name}</span>
                 </div>
               </div>
               <div className="space-y-4">
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Institutional Email</label>
                 <div className="flex items-center gap-4 text-xl font-light text-slate-900 border-b border-slate-50 pb-4">
                   <HiOutlineMail className="text-indigo-600" />
-                  <span>{user.email}</span>
+                  <span>{displayUser.email}</span>
                 </div>
               </div>
               <div className="space-y-4">
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Secure Comm-Link</label>
                 <div className="flex items-center gap-4 text-xl font-light text-slate-900 border-b border-slate-50 pb-4">
                   <HiOutlinePhone className="text-indigo-600" />
-                  <span>{user.phone}</span>
+                  <span>{displayUser.phone}</span>
                 </div>
               </div>
             </div>
@@ -83,10 +104,10 @@ const UserProfile = () => {
             <div className="absolute top-[-20%] right-[-20%] w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
             <HiOutlineShieldCheck size={28} className="mb-6" />
             <p className="text-[9px] font-black uppercase tracking-widest text-white/60 mb-2">Residency Status</p>
-            <h4 className="text-2xl font-serif-display mb-8">{user.membership}</h4>
+            <h4 className="text-2xl font-serif-display mb-8">{displayUser.membership}</h4>
             <div className="pt-6 border-t border-white/20">
               <p className="text-[9px] font-black uppercase tracking-widest text-white/60 mb-1">Authenticated Since</p>
-              <span className="text-md font-light">{user.since}</span>
+              <span className="text-md font-light">{displayUser.since}</span>
             </div>
           </div>
 

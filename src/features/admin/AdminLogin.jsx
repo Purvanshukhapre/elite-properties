@@ -48,95 +48,109 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen admin-login-bg flex items-center justify-center py-12 px-4">
-      <div className="page-container">
-        <div className="admin-container max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left visual / brand panel (minimal) */}
-          <div className="hidden lg:flex flex-col justify-center admin-left-panel" aria-hidden>
-            <div style={{display:'flex',alignItems:'center',gap:12}}>
-              <div style={{width:48,height:48,borderRadius:8,background:'#0F172A',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:700,fontSize:18}}>EP</div>
-              <div>
-                <h2 className="text-lg font-semibold" style={{color:'var(--text-primary)'}}>Elite Properties</h2>
-                <p className="text-xs uppercase" style={{color:'var(--text-muted)',letterSpacing:'0.06em'}}>Administrative Console</p>
-              </div>
+    <div className="min-h-screen bg-[#0B0B0C] flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Background with subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-black opacity-20 blur-sm"></div>
+      <div className="absolute inset-0 bg-[url('/colonial-style-house-night-scene.jpg')] bg-cover bg-center opacity-20 blur-sm"></div>
+      
+      <div className="relative z-10 w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        {/* Left visual / brand panel (luxury executive panel) */}
+        <div className="hidden lg:flex flex-col justify-center text-white p-10" aria-hidden>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-white font-bold text-xl border border-white/10 bg-gradient-to-br from-gray-800 to-gray-900">
+              EP
             </div>
-
-            <div className="mt-6">
-              <h3 className="text-2xl font-semibold mb-2" style={{color:'var(--text-primary)'}}>Administrative Access</h3>
-              <p className="text-sm" style={{color:'var(--text-secondary)'}}>This portal controls live platform data. Authorized personnel only.</p>
-            </div>
-
-            <div style={{marginTop:20}}>
-              <div style={{display:'flex',alignItems:'center',gap:10}}>
-                <div style={{width:8,height:8,borderRadius:2,background: 'var(--primary-action)'}}></div>
-                <div style={{color:'var(--text-secondary)',fontSize:13}}>Actions here may affect production — proceed carefully.</div>
-              </div>
+            <div>
+              <h2 className="text-xl font-semibold text-premium-gold font-serif">Elite Properties</h2>
+              <p className="text-xs uppercase text-neutral-400 tracking-wider mt-1">Executive Console</p>
             </div>
           </div>
 
-          {/* Right - login form */}
-          <div className="admin-form-card">
-            <div className="text-center mb-6">
-              <div style={{width:56,height:56,margin:'0 auto',borderRadius:8,background:'#0F172A',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:700,fontSize:20}}>A</div>
-              <h1 className="text-2xl font-semibold mt-4" style={{color:'var(--text-primary)'}}>Administrative Access</h1>
-              <p className="text-sm mt-1" style={{color:'var(--text-secondary)'}}>This portal controls live platform data. Authorized personnel only.</p>
+          <div className="mt-6">
+            <h3 className="text-3xl font-light mb-4 text-white">Executive Access Portal</h3>
+            <p className="text-sm text-neutral-300 leading-relaxed">Secure administrative gateway with privileged access to critical platform operations. Reserved for authorized executives only.</p>
+          </div>
+
+          <div className="mt-8 space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-3 h-3 rounded-full bg-premium-gold mt-1.5 flex-shrink-0"></div>
+              <div className="text-sm text-neutral-400">Critical operations may affect live platform performance</div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-3 h-3 rounded-full bg-premium-gold mt-1.5 flex-shrink-0"></div>
+              <div className="text-sm text-neutral-400">All actions are logged for security and compliance</div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-3 h-3 rounded-full bg-premium-gold mt-1.5 flex-shrink-0"></div>
+              <div className="text-sm text-neutral-400">Access granted to verified administrators only</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right - login form (premium glass card) */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-10">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 mx-auto rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 flex items-center justify-center text-white font-bold text-2xl mb-4">
+              A
+            </div>
+            <h1 className="text-2xl font-semibold text-white mb-2">Executive Authentication</h1>
+            <p className="text-sm text-neutral-400">Verify your credentials for administrative access</p>
+          </div>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-50/10 border border-red-500/30 rounded-lg bg-gradient-to-r from-red-900/20 to-transparent">
+              <p className="text-sm text-red-300">{error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-500 focus:border-premium-gold focus:ring-1 focus:ring-premium-gold transition-all duration-200 w-full"
+                placeholder="executive@eliteproperties.com"
+              />
             </div>
 
-            {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-md">
-                <p className="text-sm" style={{color:'#b91c1c'}}>{error}</p>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="label-premium">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="input-premium w-full"
-                  placeholder="admin@eliteproperties.com"
-                />
-              </div>
-
-              <div>
-                <label className="label-premium">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="input-premium w-full"
-                  placeholder="Enter your password"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-base btn-primary w-full"
-              >
-                {loading ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Signing In...
-                  </>
-                ) : (
-                  'Sign in as Administrator'
-                )}
-              </button>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm" style={{color:'var(--text-secondary)'}}>
-                Need to access user portal?{' '}
-                <a href="/login" className="font-medium" style={{color:'var(--primary-action)'}}>Sign in here</a>
-              </p>
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-500 focus:border-premium-gold focus:ring-1 focus:ring-premium-gold transition-all duration-200 w-full"
+                placeholder="Enter your secure password"
+              />
             </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-premium-gold text-black font-medium rounded-lg px-6 py-3 hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-premium-gold/30 w-full"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Authenticating...
+                </div>
+              ) : (
+                'Authenticate Executive Access'
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-neutral-400">
+              Need to access user portal?{' '}
+              <a href="/login" className="font-medium text-premium-gold hover:underline">Sign in as client</a>
+            </p>
           </div>
         </div>
       </div>

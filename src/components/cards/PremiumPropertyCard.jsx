@@ -1,31 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  PREMIUM_COMPONENTS
+import { 
+  PREMIUM_COMPONENTS 
 } from '../../design-system/premium-design-system';
 
 const PremiumPropertyCard = ({ property, index = 0, variant = 'default' }) => {
   const isLuxury = variant === 'luxury';
-
-  // API Mapping & Fallbacks
-  const id = property.id || property._id;
-  const title = property.title || `${property.bhk} BHK in ${property.city}`;
-  const image = property.propertyPics?.[0] || property.image || 'https://placehold.co/1200x800?text=Elite+Luxury';
-  const price = property.priceTag || (property.price ? `₹${property.price.toLocaleString()}` : 'Price on Request');
-  const location = property.location || `${property.locality}, ${property.city}`;
-  const features = property.amenities || property.features || [];
-  const roi = property.roi || '8.5%';
-  const type = property.propertyCategory || property.type || 'Residential';
-  const annualReturn = property.annualReturn || '12% Est.';
-  const appreciation = property.appreciation || '15% YoY';
-
-  const cardStyles = isLuxury
-    ? PREMIUM_COMPONENTS.cards.luxury
+  
+  const cardStyles = isLuxury 
+    ? PREMIUM_COMPONENTS.cards.luxury 
     : PREMIUM_COMPONENTS.cards.premium;
 
   return (
     <motion.div
-      className={`card-premium relative ${isLuxury ? '' : ''}`}
+      className={`${isLuxury ? 'bg-premium-ivory' : 'bg-white'} rounded-2xl overflow-hidden shadow-lg`}
       style={cardStyles.base}
       whileHover={cardStyles.hover}
       initial={{ opacity: 0, y: 50 }}
@@ -34,20 +22,20 @@ const PremiumPropertyCard = ({ property, index = 0, variant = 'default' }) => {
     >
       {/* Property Image Gallery */}
       <div className="relative">
-        <div className="card-image relative">
-          <img
-            src={image}
-            alt={title}
-            className="transition-transform duration-200"
+        <div className="relative h-64 md:h-80 overflow-hidden">
+          <img 
+            src={property.image} 
+            alt={property.title}
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
           />
-
-          {/* Soft overlay for readability */}
-          <div className="card-overlay" aria-hidden="true"></div>
-
+          
+          {/* Image Overlay Effects */}
+          <div className="absolute inset-0 bg-gradient-to-t from-premium-onyx/60 via-transparent to-transparent"></div>
+          
           {/* Premium Badges */}
           <div className="absolute top-4 left-4 space-y-2">
-            <div className="bg-premium-gold text-premium-onyx px-3 py-1 rounded-full text-sm font-semibold capitalize">
-              {type}
+            <div className="bg-premium-gold text-premium-onyx px-3 py-1 rounded-full text-sm font-semibold">
+              {property.type}
             </div>
             {property.featured && (
               <div className="bg-premium-amethyst text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -55,106 +43,138 @@ const PremiumPropertyCard = ({ property, index = 0, variant = 'default' }) => {
               </div>
             )}
           </div>
-
+          
           {/* Quick Actions */}
-          <div className="absolute top-4 right-4 flex flex-col gap-2">
+          <div className="absolute top-4 right-4 space-y-2">
             <motion.button
-              className="btn-base btn-secondary text-sm px-3 py-2 bg-white/70 backdrop-blur-sm border border-white/30 flex items-center gap-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              aria-label="Save property"
+              className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" /></svg>
-              <span>Save</span>
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+              </svg>
+            </motion.button>
+            
+            <motion.button
+              className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+              </svg>
             </motion.button>
           </div>
-
+          
           {/* Price Tag */}
           <div className="absolute bottom-4 left-4">
-            <div className="px-4 py-2 rounded-xl font-bold text-lg" style={{ background: 'var(--primary-action)', color: '#fff' }}>
-              {price}
+            <div className="bg-premium-sapphire text-white px-4 py-2 rounded-xl font-bold text-lg shadow-xl">
+              {property.price}
             </div>
           </div>
-
+          
           {/* ROI Indicator */}
           <div className="absolute bottom-4 right-4">
             <div className="bg-premium-emerald text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
               <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
               </svg>
-              {roi} ROI
+              {property.roi} ROI
             </div>
           </div>
         </div>
+        
+        {/* Image Navigation Dots */}
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {[...Array(3)].map((_, idx) => (
+            <div 
+              key={idx}
+              className={`w-2 h-2 rounded-full ${
+                idx === 0 ? 'bg-white' : 'bg-white/50'
+              }`}
+            ></div>
+          ))}
+        </div>
       </div>
-
+      
       {/* Property Details */}
-      <div className={`p-5 ${isLuxury ? 'pb-8' : ''}`}>
+      <div className={`p-6 ${isLuxury ? 'pb-8' : ''}`}>
         {/* Title and Location */}
         <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-bold text-premium-onyx mb-2 line-clamp-1">
-            {title}
+          <h3 className="text-xl md:text-2xl font-bold text-premium-onyx mb-2">
+            {property.title}
           </h3>
           <div className="flex items-center text-premium-platinum">
-            <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
             </svg>
-            <span className="text-sm md:text-base line-clamp-1">{location}</span>
+            <span className="text-sm md:text-base">{property.location}</span>
           </div>
         </div>
-
+        
         {/* Property Features */}
-        <div className="flex flex-wrap gap-2 mb-6 max-h-[80px] overflow-hidden">
-          {features.slice(0, 3).map((feature, idx) => (
-            <span
+        <div className="flex flex-wrap gap-2 mb-6">
+          {property.features.map((feature, idx) => (
+            <span 
               key={idx}
-              className={`px-3 py-1 rounded-lg text-[10px] font-medium uppercase tracking-wider ${isLuxury
-                ? 'bg-premium-gold/10 text-premium-gold border border-premium-gold/20'
-                : 'bg-premium-ivory text-premium-onyx'
-                }`}
+              className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                isLuxury 
+                  ? 'bg-premium-gold/10 text-premium-gold border border-premium-gold/20' 
+                  : 'bg-premium-ivory text-premium-onyx'
+              }`}
             >
               {feature}
             </span>
           ))}
-          {features.length > 3 && (
-            <span className="px-3 py-1 rounded-lg text-[10px] font-medium bg-gray-100 text-gray-500 uppercase tracking-wider">
-              +{features.length - 3} More
-            </span>
-          )}
         </div>
-
+        
         {/* Property Description */}
-        <p className="text-premium-platinum text-sm mb-6 line-clamp-2 min-h-[40px]">
-          {description}
-        </p>
-
+        {property.description && (
+          <p className="text-premium-platinum text-sm mb-6 line-clamp-2">
+            {property.description}
+          </p>
+        )}
+        
         {/* Investment Metrics */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className={`p-3 rounded-xl ${isLuxury ? 'bg-premium-ivory' : 'bg-premium-platinum/10'}`}>
-            <div className="text-[10px] text-premium-platinum uppercase tracking-wide mb-1 font-bold">
+          <div className={`p-3 rounded-xl ${
+            isLuxury ? 'bg-premium-ivory' : 'bg-premium-platinum/10'
+          }`}>
+            <div className="text-xs text-premium-platinum uppercase tracking-wide mb-1">
               Annual Return
             </div>
-            <div className="text-lg font-black text-premium-emerald">
-              {annualReturn}
+            <div className="text-lg font-bold text-premium-emerald">
+              {property.annualReturn}
             </div>
           </div>
-
-          <div className={`p-3 rounded-xl ${isLuxury ? 'bg-premium-ivory' : 'bg-premium-platinum/10'
-            }`}>
-            <div className="text-[10px] text-premium-platinum uppercase tracking-wide mb-1 font-bold">
+          
+          <div className={`p-3 rounded-xl ${
+            isLuxury ? 'bg-premium-ivory' : 'bg-premium-platinum/10'
+          }`}>
+            <div className="text-xs text-premium-platinum uppercase tracking-wide mb-1">
               Appreciation
             </div>
-            <div className="text-lg font-black text-premium-sapphire">
-              {appreciation}
+            <div className="text-lg font-bold text-premium-sapphire">
+              {property.appreciation}
             </div>
           </div>
         </div>
-
+        
         {/* Action Buttons */}
         <div className="flex gap-3">
           <motion.button
-            className="btn-base btn-primary flex-1"
-            whileTap={{ scale: 0.98 }}
+            style={isLuxury 
+              ? PREMIUM_COMPONENTS.buttons.luxury.base 
+              : PREMIUM_COMPONENTS.buttons.primary.base
+            }
+            whileHover={isLuxury 
+              ? PREMIUM_COMPONENTS.buttons.luxury.hover 
+              : PREMIUM_COMPONENTS.buttons.primary.hover
+            }
+            whileTap={{ scale: 0.95 }}
+            className="flex-1 flex items-center justify-center"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -162,19 +182,20 @@ const PremiumPropertyCard = ({ property, index = 0, variant = 'default' }) => {
             </svg>
             View Details
           </motion.button>
-
+          
           <motion.button
-            className="btn-base btn-secondary w-44"
-            whileTap={{ scale: 0.98 }}
+            style={PREMIUM_COMPONENTS.buttons.secondary.base}
+            whileHover={PREMIUM_COMPONENTS.buttons.secondary.hover}
+            whileTap={{ scale: 0.95 }}
+            className="w-12 h-12 flex items-center justify-center"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-            Save
           </motion.button>
         </div>
       </div>
-
+      
       {/* Luxury Footer (Only for luxury variant) */}
       {isLuxury && (
         <div className="px-6 pb-6">

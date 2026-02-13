@@ -13,30 +13,30 @@ const Button = ({
   const baseClasses = 'font-semibold rounded-lg transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden';
   
   const variantClasses = {
-    primary: 'btn-base btn-primary',
-    secondary: 'btn-base btn-secondary',
-    luxury: 'btn-base btn-primary',
-    danger: 'btn-base',
-    success: 'btn-base btn-primary',
-    outline: 'btn-base btn-secondary',
-    subtle: 'btn-base btn-secondary'
+    primary: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl',
+    secondary: 'bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 shadow-md hover:shadow-lg',
+    luxury: 'bg-gradient-to-r from-yellow-500 to-purple-600 text-white shadow-lg hover:shadow-2xl hover:scale-105',
+    danger: 'bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl',
+    success: 'bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl',
+    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 hover:shadow-lg',
+    subtle: 'bg-gray-100 hover:bg-gray-200 text-gray-700 hover:shadow-md'
   };
   
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl'
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-6 py-3 text-base',
+    lg: 'px-8 py-4 text-lg',
+    xl: 'px-10 py-5 text-xl'
   };
   
   const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
   
   return (
     <motion.button 
-      className={`${classes} ${sizeClasses[size]}`}
-      whileHover={{ y: -1 }}
+      className={classes}
+      whileHover={{ y: variant === 'primary' || variant === 'luxury' ? -2 : -1, scale: variant === 'luxury' ? 1.02 : 1 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.18, ease: 'easeInOut' }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       disabled={disabled || loading} 
       {...props}
     >
@@ -53,8 +53,7 @@ const Button = ({
       </span>
       
       {/* Subtle hover effect overlay */}
-      <span className="absolute inset-0 bg-white opacity-0 hover:opacity-06 transition-opacity duration-200 rounded-lg"></span>
-        <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition-opacity duration-200 rounded-lg"></span>
+      <span className="absolute inset-0 bg-white opacity-0 hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
     </motion.button>
   );
 };

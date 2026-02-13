@@ -73,10 +73,6 @@ const CleanNavbar = () => {
     // Map protected routes to their public counterparts
     const routeMap = {
       '/home': '/',
-      '/protected/buy': '/buy',
-      '/protected/rent': '/rent',
-      '/protected/commercial': '/commercial',
-      '/protected/sell': '/sell',
       '/protected/agents': '/agents',
       '/protected/services': '/services',
       '/protected/about': '/about',
@@ -125,104 +121,11 @@ const CleanNavbar = () => {
 
         {/* Center: Navigation Links */}
         <div className="hidden md:flex items-center space-x-8">
-          {/* Buy Dropdown */}
-          <div className="dropdown-container relative"
-            onMouseEnter={() => openDropdown('buy')}
-            onMouseLeave={closeDropdown}
-          >
-            <Link 
-              to="/protected/buy" 
-              className={navItemClasses}
-              onClick={handleNavClick}
-            >
-              Buy
-              <span className={hoverLineClasses}></span>
-              <FaChevronDown className="ml-1 text-xs inline-block" />
-            </Link>
-            <div className={getDropdownClasses('buy')}>
-              <div className="px-4 py-3 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900">Property Types</h3>
-              </div>
-              <Link to="/protected/buy" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Houses & Villas
-              </Link>
-              <Link to="/protected/buy" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Apartments
-              </Link>
-              <Link to="/protected/buy" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Luxury Homes
-              </Link>
-              <Link to="/protected/buy" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Investment Properties
-              </Link>
-            </div>
-          </div>
 
-          {/* Rent Dropdown */}
-          <div className="dropdown-container relative"
-            onMouseEnter={() => openDropdown('rent')}
-            onMouseLeave={closeDropdown}
-          >
-            <Link 
-              to="/protected/rent" 
-              className={navItemClasses}
-              onClick={handleNavClick}
-            >
-              Rent
-              <span className={hoverLineClasses}></span>
-              <FaChevronDown className="ml-1 text-xs inline-block" />
-            </Link>
-            <div className={getDropdownClasses('rent')}>
-              <div className="px-4 py-3 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900">Rental Options</h3>
-              </div>
-              <Link to="/protected/rent" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Monthly Rentals
-              </Link>
-              <Link to="/protected/rent" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Short-term Stays
-              </Link>
-              <Link to="/protected/rent" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Co-living Spaces
-              </Link>
-              <Link to="/protected/rent" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Corporate Housing
-              </Link>
-            </div>
-          </div>
 
-          {/* Commercial Dropdown */}
-          <div className="dropdown-container relative"
-            onMouseEnter={() => openDropdown('commercial')}
-            onMouseLeave={closeDropdown}
-          >
-            <Link 
-              to="/protected/commercial" 
-              className={navItemClasses}
-              onClick={handleNavClick}
-            >
-              Commercial
-              <span className={hoverLineClasses}></span>
-              <FaChevronDown className="ml-1 text-xs inline-block" />
-            </Link>
-            <div className={getDropdownClasses('commercial')}>
-              <div className="px-4 py-3 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900">Commercial Types</h3>
-              </div>
-              <Link to="/protected/commercial" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Office Spaces
-              </Link>
-              <Link to="/protected/commercial" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Retail Shops
-              </Link>
-              <Link to="/protected/commercial" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Industrial Units
-              </Link>
-              <Link to="/protected/commercial" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-                Warehouses
-              </Link>
-            </div>
-          </div>
+
+
+
 
           {/* Services Dropdown */}
           <div className="dropdown-container relative"
@@ -332,15 +235,7 @@ const CleanNavbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="px-6 py-4 space-y-3">
-            <Link to="/protected/buy" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-              Buy
-            </Link>
-            <Link to="/protected/rent" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-              Rent
-            </Link>
-            <Link to="/protected/commercial" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
-              Commercial
-            </Link>
+
             <Link to="/protected/services" className="block py-2 text-gray-700 hover:text-blue-600 transition-colors" onClick={handleNavClick}>
               Services
             </Link>

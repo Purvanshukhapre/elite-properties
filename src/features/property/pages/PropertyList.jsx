@@ -10,9 +10,17 @@ const PropertyList = ({ initialType = "all", title = "Curated Portfolio", subtit
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Filter properties to only show approved/active ones to regular users
+  const approvedProperties = properties.filter(p => {
+    // Show properties that are either approved/active or have no status (default to visible)
+    // Hide properties with 'pending', 'under_review', 'rejected' status
+    const status = p.propertyStatus || p.status || 'active';
+    return ['active', 'available', 'approved', 'sold', 'rented'].includes(status.toLowerCase());
+  });
+
   const filteredProperties = filterType === 'all'
-    ? properties
-    : properties.filter(p => p.type === filterType || (filterType === 'commercial' && p.type === 'commercial'));
+    ? approvedProperties
+    : approvedProperties.filter(p => p.type === filterType || (filterType === 'commercial' && p.type === 'commercial'));
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -42,7 +50,7 @@ const PropertyList = ({ initialType = "all", title = "Curated Portfolio", subtit
       <PageHeader
         title={title}
         subtitle={subtitle || "Explore our exclusive collection of hand-picked luxury properties."}
-        backgroundImage={backgroundImage || "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600&h=900&fit=crop"}
+        backgroundImage={backgroundImage || "/photorealistic-wooden-house-with-timber-structure.jpg"}
       />
 
       {/* Filter Bar */}
@@ -96,7 +104,11 @@ const PropertyList = ({ initialType = "all", title = "Curated Portfolio", subtit
             ))}
           </motion.div>
 
-          {filteredProperties.length === 0 && (
+          {loading ? (
+            <div className="text-center py-32 text-gray-400">
+              <p>Loading properties...</p>
+            </div>
+          ) : filteredProperties.length === 0 && (
             <div className="text-center py-32 text-gray-400">
               <p>No properties found matching your criteria.</p>
             </div>
